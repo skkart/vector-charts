@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Usage</title>
+    <link rel="shortcut icon" href="#">
+</head>
+<body>
+<h1>This page will import the vector-charts library to window scope.
+    All chart methods and utility are available at window scope</h1>
+<pre>
+    Example:
+    console.log(window.vc); ==> vector-charts library
+    console.log(vc.version); ==> 1.0.0
+</pre>
+</body>
+<script src="dist/vector-charts.min.js"></script>
+<script>
+  window.onload = function () {
+    console.log(vc)
+  };
+</script>
+</html>
