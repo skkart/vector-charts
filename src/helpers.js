@@ -39,6 +39,7 @@ export function addDefaultChartOptions (opts) {
 }
 
 export function addDefaultTSOptions (opts) {
+  // Add defaults to xAxis
   opts.xAxis = Object.assign({
     bottom: {
       unit: constants.UNITS_TIME,
@@ -54,12 +55,11 @@ export function addDefaultTSOptions (opts) {
 
     const xAxisFn = (dateDiff < constants.TIME_FORMAT_BUFFER) ? timeFormat('%H:%M') : timeFormat('%d %b %Y')
     opts.xAxis.bottom.tickFormatter = (xDate) => {
-      console.log(xDate)
       return xAxisFn(xDate)
     }
   }
 
-  // If yAxis is not specified, then default is left and its value axis with unit as bps
+  // If yAxis is not specified, then default is left and its value axis with unit
   if (!opts.yAxis) {
     opts.yAxis = {
       left: {}
