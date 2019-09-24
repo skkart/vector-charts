@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    body {
+        font-family: 'Roboto';
+        /* font-family: RobotoLight; */
+        font-weight: 300;
+        font-size: 12px;
+        /* font: normal 13px Calibri; */
+        color: #363636;
+    }
+</style>
+
+<body>
+    <h1> </h1>
+    <br/><br/>
+    <div id="container" class="ac-chartzone"><svg>
+
+  </svg></div>
+    <br/><br/>
+    <br/><br/>
+    <br/><br/>
+    <div id="container2" class="ac-chartzone"><svg>
+
+  </svg></div>
+    <br/><br/>
+    <br/><br/>
+</body>
+<link rel="stylesheet" type="text/css" href="AryakaCharts.css">
+<script src="jquery-1.8.2.min.js"></script>
+<script src="underscore-min.js"></script>
+<script src="d3.v4.min.js"></script>
+<script src="date.js"></script>
+<script src="backbone-min.js"></script>
+<script>
+Variables = {
+    userCustomizeInfo : {
+        timeZone: "Asia/Kolkata"
+    }
+};
+
+// Load timezoneJS which is used for date convertion to user time zone
+timezoneJS.timezone.zoneFileBasePath = '/tz';
+timezoneJS.timezone.init();
+
+</script>
+<script src="AryakaCharts.js"></script>
+<script src="AryakaChartsExt.js"></script>
+<script>
+    var myChart = [];
+    /*
+    Currently supported json types for pieseries graphs are of two types pieSeriesJSONType1 and pieSeriesJSONType2. Both the usage are expained below.
+
+    */
+    d3.json("allappsPie.json", function(error, jdata) {
+      if (error) throw error;
+      /*
+        This chart shows usage of pie chart having json_type - pieSeriesJSONType1
+        The each arc are taken from constantSeries.apps and its corresponding value is read from aggregate[appId]
+        If particular arc is less than 1% or exceeds pieArcCount options. Those arcs will be aggregated to 'Others'
+        */
+      var opts = {
+        chart: {
+          chartType: 'pieseries', // Define chartType, Can take timeseries/pieseries
+          heading: "Applications",
+          pieArcCount: 20, // Top 20 arcs will be dispalyed and rest will be aggregated to 'Others'
+          width: 800,
+          height: 270,
+          margin: {
+            top: 40,
+            right: 15,
+            bottom: 50,
+            left: 45
+          },
+          chartResize: true
+        },
+        data: jdata.ResJSON, // Supply response of type timeSeriesDataType1
+        seriesColors: {
+          'Others': '#8DD3C7' // Mention color for Others Arc
+        },
+        /*
+        The name of every pie series must match with the names defined in aggregate.columns[] of response
+        */
+        series: {
+          pie: [{
+            name: 'By LAN Data', // Name taken from timeseries.columns
+            visible: true
+          }]
+        },
+        legend: {
+          visible: true, // Show pieLegends
+        }
+      };
+      myChart.push(AryakaChartsExt.createChart("#container", opts));
+    });
+
+    d3.json("countries.json", function(error, jdata) {
+      if (error) throw error;
+      /*
+        This chart shows usage of pie chart having json_type - pieSeriesJSONType2
+        The each arc are taken from constantSeries.name and its corresponding value is read from aggregate.values for the same array index
+        If particular arc is less than 1% or exceeds pieArcCount options. Those arcs will be aggregated to 'Others'
+        */
+
+      var opts = {
+        chart: {
+          chartType: 'pieseries', // Define chartType, Can take timeseries/pieseries
+          heading: "Countries",
+          pieArcCount: 20,
+          width: 800,
+          height: 270,
+          margin: {
+            top: 40,
+            right: 15,
+            bottom: 50,
+            left: 45
+          },
+          chartResize: true
+        },
+        data: jdata.ResJSON,
+        seriesColors: {
+          'Others': '#8DD3C7'
+        },
+        series: {
+          pie: [{ // Radius is calculated based on width and height of chart area
+            name: 'By Countries',
+            donutPercent: 40, // Specify options in percentages wrt loaded radius
+            ignoreOthers: false,
+            visible: true
+          }]
+        },
+        legend: {
+          position: 'right'
+        }
+      };
+
+      myChart.push(AryakaChartsExt.createChart("#container2", opts));
+    });
+
+</script>
