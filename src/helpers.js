@@ -4,6 +4,14 @@ import {timeFormat} from 'd3-time-format'
 
 export function addDefaultChartOptions (opts) {
 
+  opts.chart = Object.assign({
+    chartResize: false,
+    isTouchScreen: false,
+    className: '',
+    maxWidth: Number.MAX_SAFE_INTEGER,
+    minWidth: 0
+  }, opts.chart)
+
   // General Options to both chartType
   opts.tooltip = Object.assign({
     visible: true,
@@ -83,7 +91,7 @@ export function addDefaultTSOptions (opts) {
   }
 
   opts.zoom = Object.assign({
-    visible: true
+    visible: false
   }, (opts.zoom || {}))
 
   addDefaultChartOptions(opts)

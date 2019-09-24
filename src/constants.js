@@ -12,5 +12,6 @@ export default {
   X_AXIS_LABEL_Y: 38,
   BRUSHY_BUFFER: 10,
   Y_AXIS_SPACE: 30,
-  TIME_FORMAT_BUFFER: 60 * 60 * 24 * 1000 // 2days
+  TIME_FORMAT_BUFFER: 60 * 60 * 24 * 1000, // 2days,
+  TOOLTIP_TOP_BUFFER: 20
 }

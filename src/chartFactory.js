@@ -1,7 +1,7 @@
 import {getObject} from '@/utils'
 import constants from '@/constants'
 import BasicTSParser from '@/data-parser/BasicTSParser'
-import {TimeSeriesChart} from '@/charts/TimeSeriesChart'
+import TimeSeriesChart from '@/charts/TimeSeriesChart'
 import ChartAxisParser from '@/data-parser/ChartAxisParser'
 
 export default function chartFactory (container, opts) {

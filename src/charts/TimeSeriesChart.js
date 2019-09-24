@@ -1,13 +1,30 @@
 import {getObject, isObject} from '@/utils'
-import {Chart} from '@/charts/Chart'
+import Chart from '@/charts/Chart'
 import Axis from '@/axis'
 import {addDefaultTSOptions} from '@/helpers'
 import constants from '@/constants'
+import ChartAxisParser from '@/data-parser/ChartAxisParser'
+import BasicTSParser from '@/data-parser/BasicTSParser'
+import Tooltip from '@/tooltip/TimeSeriesTooltip'
+import MouseHandler from '@/mouse-handler'
 
-export class TimeSeriesChart extends Chart {
+export default class TimeSeriesChart extends Chart {
   constructor (container, opts) {
+    opts.startTime = new Date()
+
+    // Create the dataParser is not passed
+    if (!opts.dataParser) {
+      opts.dataParser = new BasicTSParser(opts)
+    }
+    // Check the dataParser exists and its instanceof ChartAxisParser
+    if (!(opts.dataParser instanceof ChartAxisParser)) {
+      throw new Error("DataParser in options dosen't have implementation of ChartAxisParser")
+    }
+
+    // Call Parent Impl
     super(container, opts)
-    this.startTime = new Date()
+
+    // Run the dataParser for given JSON data
     if (isObject(this.dataParser)) {
       Object.assign(this.options, this.dataParser.dataExecutor())
     }
@@ -66,6 +83,23 @@ export class TimeSeriesChart extends Chart {
       })
       this.chartComponentsArr.push(this.xAxis)
     }
+
+    const tooltipOpts = getObject(this, 'options.tooltip')
+    if (tooltipOpts.visible) {
+      this.tooltip = new Tooltip({
+        chart: this,
+        ...tooltipOpts
+      })
+      this.chartComponentsArr.push(this.tooltip)
+    }
+
+    const zoomOpts = getObject(this, 'options.zoom', {})
+    if ((tooltipOpts.visible || zoomOpts.visible)) {
+      this.mouseHandler = new MouseHandler({
+        chart: this,
+      })
+      this.chartComponentsArr.push(this.mouseHandler)
+    }
   }
 
   draw () {
@@ -78,8 +112,10 @@ export class TimeSeriesChart extends Chart {
 
     this.chartResponsive()
 
+    this.mouseHandler && this.mouseHandler.triggerMouseAction()
+
     this.timeDiff = (new Date()
-      .getTime() - this.startTime.getTime())
+      .getTime() - this.options.startTime.getTime())
     this.options.onComplete.call(this, this.timeDiff)
   }
 

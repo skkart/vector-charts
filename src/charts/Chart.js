@@ -3,18 +3,7 @@ import uniqueId from 'lodash/uniqueId'
 import {select} from 'd3-selection'
 import ChartComponent from '@/charts/ChartComponent'
 
-const resizeGraph = throttle((width, height) => {
-  if (width === this.chartFullSpace.width) {
-    return // Dont resize if graph is already adjusted
-  }
-  this.chartFullSpace.width = Math.floor(width)
-  this.chartFullSpace.height = Math.floor(height)
-  this.chartWidth = this.chartFullSpace.width - (this.margin.left + this.margin.right)
-  this.chartHeight = this.chartFullSpace.height - (this.margin.top + this.margin.bottom)
-  setTimeout(() => this.update(), 0)
-}, 150) // 'this' Will have reference of timeSeriesChart or pieSeriesChart
-
-export class Chart extends ChartComponent {
+export default class Chart extends ChartComponent {
   constructor (container, opts) {
     super()
     if (isString(container) && isObject(opts) && container.length && isObject(opts.dataParser)) {
@@ -34,14 +23,6 @@ export class Chart extends ChartComponent {
         opts.chart.height = this.$container.height()
         takeContainerHeight = true
       }
-
-      opts.chart = Object.assign({
-        chartResize: false,
-        isTouchScreen: false,
-        className: '',
-        maxWidth: Number.MAX_SAFE_INTEGER,
-        minWidth: 0
-      }, opts.chart)
 
       if (opts.chart.width > opts.chart.maxWidth) {
         opts.chart.width = opts.chart.maxWidth
@@ -165,6 +146,17 @@ export class Chart extends ChartComponent {
   }
 
   autoSizeChart () {
+    const resizeGraph = throttle((width, height) => {
+      if (width === this.chartFullSpace.width) {
+        return // Dont resize if graph is already adjusted
+      }
+      this.chartFullSpace.width = Math.floor(width)
+      this.chartFullSpace.height = Math.floor(height)
+      this.chartWidth = this.chartFullSpace.width - (this.margin.left + this.margin.right)
+      this.chartHeight = this.chartFullSpace.height - (this.margin.top + this.margin.bottom)
+      setTimeout(() => this.update(), 0)
+    }, 150) // 'this' Will have reference of timeSeriesChart or pieSeriesChart
+
     let resizedGraphWidth = this.$container.width()
 
     if (resizedGraphWidth > this.options.chart.maxWidth) {
