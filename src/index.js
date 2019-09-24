@@ -1,7 +1,14 @@
-import chartFactory from '@/chartFactory'
+import plotChart from '@/chartFactory'
+import ChartDataParer from '@/data-parser/ChartDataParser'
+import ChartAxisParer from '@/data-parser/ChartAxisParser'
+import ChartComponent from '@/charts/ChartComponent'
+
 
 const vc = {
   version: '1.0.0',
-  plotChart: chartFactory
+  plotChart,
+  ChartDataParer,
+  ChartAxisParer,
+  ChartComponent
 }
 export default vc
