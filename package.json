@@ -14,6 +14,8 @@
     "babel": "babel src --out-dir dist/compiled --source-maps",
     "start": "http-server ./examples/ -p 9088",
     "build": "webpack",
+    "dev": "webpack --config webpack.dev.js",
+    "postdev": "cp -Rf dist examples/",
     "postbuild": "cp -Rf dist examples/"
   },
   "dependencies": {
@@ -21,6 +23,7 @@
     "d3-axis": "^1.0.12",
     "d3-scale": "^3.1.0",
     "d3-selection": "^1.4.0",
+    "d3-shape": "^1.3.5",
     "d3-time-format": "^2.1.3",
     "lodash": "^4.17.15",
     "moment-timezone": "^0.5.26"

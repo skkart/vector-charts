@@ -7,6 +7,7 @@ import ChartAxisParser from '@/data-parser/ChartAxisParser'
 import BasicTSParser from '@/data-parser/BasicTSParser'
 import Tooltip from '@/tooltip/TimeSeriesTooltip'
 import MouseHandler from '@/mouse-handler'
+import Series from '@/series'
 
 export default class TimeSeriesChart extends Chart {
   constructor (container, opts) {
@@ -99,6 +100,14 @@ export default class TimeSeriesChart extends Chart {
         chart: this,
       })
       this.chartComponentsArr.push(this.mouseHandler)
+    }
+
+    if (this.options.series) {
+      this.series = new Series({
+        chart: this
+      })
+      // Register the component for draw, update, showHide and remove
+      this.chartComponentsArr.push(this.series)
     }
   }
 

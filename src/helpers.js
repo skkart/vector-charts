@@ -1,5 +1,5 @@
 import constants from '@/constants'
-import {isFunction} from '@/utils'
+import {getValueWithDecimals, isArray, isFunction} from '@/utils'
 import {timeFormat} from 'd3-time-format'
 
 export function addDefaultChartOptions (opts) {
@@ -17,6 +17,48 @@ export function addDefaultChartOptions (opts) {
     visible: true,
     format: false // Use aryakaCharts internal tooltip formatter to show raw data
   }, (opts.tooltip || {}))
+
+  if (!opts.tooltip.format) {
+    const formatTime = timeFormat('%d %b %Y  %H:%M:%S')
+    opts.tooltip.format = function (d) {
+      if (!d || !isArray(d)) {
+        return ''
+      }
+      const plotSet = this.options.plotSet
+      const timeInfo = this.options.timeInfo
+      const zoneOffset = this.options.xAxis.zoneOffset || ''
+      const yAxis = this.options.yAxis
+
+      let tableStr = `<table><tbody><tr>
+            <td class="value_full" colspan="2">
+            ${formatTime(d[timeInfo.dataIndex])} ${zoneOffset}
+            </td></tr>`
+
+      for (const key in plotSet) {
+        const val = d[plotSet[key].dataIndex]
+        if (!plotSet[key].visible || isNaN(val)) {
+          continue
+        }
+
+        // Find Y Axis format is preset
+        const yOrient = yAxis[plotSet[key].plotAxis[0]]
+        const format = yOrient.format || defaultValueFormat
+
+        tableStr += `<tr>
+        <td class='name'>
+            <span style='background-color:${plotSet[key].color}'></span>${plotSet[key].name}
+        </td>
+        <td class='value'>
+            ${format(val, plotSet[key].unit)}
+        </td>
+        </tr>`
+      }
+
+      tableStr += '</tbody></table>'
+
+      return tableStr
+    }
+  }
 
 
   opts.legend = Object.assign({
@@ -45,6 +87,20 @@ export function addDefaultChartOptions (opts) {
 
   return opts
 }
+
+export function defaultValueFormat (val, unit = '', decimals = 3) {
+  const denominator = 1000
+  if (val > denominator) {
+    const kVal = getValueWithDecimals(val / denominator, decimals)
+    if (kVal > denominator) {
+      const mVal = getValueWithDecimals(kVal / denominator, decimals)
+      return `${mVal}M ${unit}`
+    }
+    return `${kVal}K ${unit}`
+  }
+  return `${getValueWithDecimals(val, decimals)} ${unit}`
+}
+
 
 export function addDefaultTSOptions (opts) {
   // Add defaults to xAxis
