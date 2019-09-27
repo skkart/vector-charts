@@ -186,11 +186,6 @@ export default class Chart extends ChartComponent {
     destroyFull && this.svg.remove()
     destroyFull && this.$container.remove()
 
-    // Destorying chart and its context (timeSeriesChart or pieSeriesChart)
-    Object.keys(this).forEach(function (key) {
-      delete this[key]
-    }, this)
-
     return null
   }
 }
