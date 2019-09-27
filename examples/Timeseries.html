@@ -57,14 +57,13 @@
       function json(response) {
         return response.json()
       }
-      fetch('data.json')
+      fetch('data3.json')
         .then(status)
         .then(json)
         .then(function(jdata) {
           console.log(jdata)
           var opts = {
             chart: {
-              chartType: 'timeseries',
               heading: "Timeseries",
               chartIndex: 2,
               //width: 800,
@@ -85,8 +84,11 @@
             },
             yAxis: {
               left: {
-                unit: 'ty',
-                tickNumber: 5
+                unit: 'Count',
+                tickNumber: 5,
+                formadt (d) { // Format all series belong to this Y Axis
+                  return d
+                }
               }
             },
             series: {
@@ -108,21 +110,6 @@
               }
               ],
               stack: []
-            },
-            constantSeries: {
-              line: [{
-                name: 'Constant-1',
-                lineWidth: '2px',
-                plotAxis: ["left", "bottom"],
-                color:"#666699"
-              },
-                {
-                  name: 'Constant-2',
-                  lineWidth: '2px',
-                  plotAxis: ["left", "bottom"],
-                  color:"#4f56fd"
-                }
-              ]
             }
           };
 
@@ -131,4 +118,4 @@
     }
 </script>
 <script src="jquery-1.8.2.min.js"></script>
-<script src="dist/vector-charts.min.js"></script>
+<script src="dist/vector-charts.js"></script>

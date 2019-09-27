@@ -1,6 +1,4 @@
 const path = require('path')
-// const webpack = require('webpack')
-
 const SRC_DIR = path.resolve(__dirname, './src/')
 var config = {
   mode: 'production',
@@ -16,6 +14,7 @@ var config = {
     umdNamedDefine: true,
     libraryExport: 'default'
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -33,8 +32,7 @@ var config = {
   },
   stats: {
     colors: true
-  },
-  devtool: '#source-map'
+  }
 }
 
 module.exports = config

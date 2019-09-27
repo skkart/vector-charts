@@ -138,6 +138,17 @@ export default class Chart extends ChartComponent {
   // chartResponsive based on screen resize is handled
   chartResponsive () {
     if (this.options.chart.chartResize) {
+      this.throttedResize = throttle((width, height) => {
+        if (width === this.chartFullSpace.width) {
+          return // Dont resize if graph is already adjusted
+        }
+        this.chartFullSpace.width = Math.floor(width)
+        this.chartFullSpace.height = Math.floor(height)
+        this.chartWidth = this.chartFullSpace.width - (this.margin.left + this.margin.right)
+        this.chartHeight = this.chartFullSpace.height - (this.margin.top + this.margin.bottom)
+        setTimeout(() => this.update(), 0)
+      }, 450) // 'this' Will have reference of timeSeriesChart or pieSeriesChart
+
       // Add resize for each chart based on chart ID namespace
       const chartId = 'ac_' + this.options.chart.id
       $(window).on('resize.' + chartId, () => this.autoSizeChart())
@@ -146,17 +157,6 @@ export default class Chart extends ChartComponent {
   }
 
   autoSizeChart () {
-    const resizeGraph = throttle((width, height) => {
-      if (width === this.chartFullSpace.width) {
-        return // Dont resize if graph is already adjusted
-      }
-      this.chartFullSpace.width = Math.floor(width)
-      this.chartFullSpace.height = Math.floor(height)
-      this.chartWidth = this.chartFullSpace.width - (this.margin.left + this.margin.right)
-      this.chartHeight = this.chartFullSpace.height - (this.margin.top + this.margin.bottom)
-      setTimeout(() => this.update(), 0)
-    }, 150) // 'this' Will have reference of timeSeriesChart or pieSeriesChart
-
     let resizedGraphWidth = this.$container.width()
 
     if (resizedGraphWidth > this.options.chart.maxWidth) {
@@ -167,7 +167,7 @@ export default class Chart extends ChartComponent {
       resizedGraphWidth = this.options.chart.minWidth
     }
 
-    resizeGraph(resizedGraphWidth, this.$container.height())
+    this.throttedResize(resizedGraphWidth, this.$container.height())
   }
 
   // Destroy all chart properties and components

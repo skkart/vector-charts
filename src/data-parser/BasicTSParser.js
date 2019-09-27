@@ -15,7 +15,6 @@ export default class BasicTSParser extends ChartAxisParser {
       this.dataOptions = {}
       this.opts.data && (this.dataOptions.data = this.opts.data)
       this.opts.series && (this.dataOptions.series = this.opts.series)
-      this.opts.constantSeries && (this.dataOptions.constantSeries = this.opts.constantSeries)
       this.opts.yAxis && (this.dataOptions.yAxis = this.opts.yAxis)
 
       Object.assign(this.dataOptions, this.constructChartData())
@@ -77,9 +76,7 @@ export default class BasicTSParser extends ChartAxisParser {
   constructYAxisInfo () {
     const dataOptions = this.dataOptions
     const eachPlotSet = dataOptions.plotSet
-    const constPlotSet = dataOptions.constantPlotSet
     const plotInfo = dataOptions.series
-    const constInfo = dataOptions.constantSeries
     const data = dataOptions.chartData
     const yAxis = getObject(dataOptions, 'yAxis.left')
     const yAxis2 = getObject(dataOptions, 'yAxis.right')
@@ -195,31 +192,6 @@ export default class BasicTSParser extends ChartAxisParser {
         }
       }
 
-      // Find max and min value for visible constant series
-      for (key in constInfo) {
-        if (key === 'line') {
-          constInfo[key].forEach(function (plotData) {
-            if (constPlotSet[plotData.name].visible && constPlotSet[plotData.name].plotAxis[0] === 'left') {
-              if (constPlotSet[plotData.name].maxVal > allMax) {
-                allMax = constPlotSet[plotData.name].maxVal
-              }
-              if (constPlotSet[plotData.name].minVal < allMin) {
-                allMin = constPlotSet[plotData.name].minVal
-              }
-            }
-
-            if (constPlotSet[plotData.name].visible && constPlotSet[plotData.name].plotAxis[0] === 'right') {
-              if (constPlotSet[plotData.name].maxVal > allMax2) {
-                allMax2 = constPlotSet[plotData.name].maxVal
-              }
-              if (constPlotSet[plotData.name].minVal < allMin2) {
-                allMin2 = constPlotSet[plotData.name].minVal
-              }
-            }
-          })
-        }
-      }
-
 
       let yMin, yMax
       // If Yaxis range is already defined in options, Override it.
@@ -275,16 +247,11 @@ export default class BasicTSParser extends ChartAxisParser {
     const resJson = dataOptions.data
     const seriesData = resJson.timeseries
     const columns = seriesData.columns
-    const constantSeries = resJson.constantSeries || null
-    const constantColumns = constantSeries ? constantSeries.columns : null
     let ind = 0
     // Object that contains all plot functions needed for the chart
     const eachPlotSet = {}
-    // Object that contains all constant plot functions needed for the chart
-    const constantPlotSet = {}
     // Set of rules that charts needs to be draw on timeSeriesChart
     const plotInfo = dataOptions.series
-    const constantPlotInfo = dataOptions.constantSeries
     let key
 
     const timeStampIndex = dataOptions.timeInfo.dataIndex
@@ -366,48 +333,9 @@ export default class BasicTSParser extends ChartAxisParser {
       }
     }
 
-    // Generate constantPlotSet using Data
-    if (constantColumns && constantColumns.length) {
-      constantColumns.forEach(function (d) {
-        const refineName = refineString(d)
-
-        constantPlotSet[refineName] = {
-          name: d,
-          value: constantSeries[d].value,
-          minVal: 0,
-          maxVal: constantSeries[d].value,
-          unit: constantSeries[d].unit,
-          color: constantSeries[d].color,
-          visible: false
-        }
-      })
-
-      for (key in constantPlotInfo) {
-        if (key === 'line') {
-          constantPlotInfo[key].forEach(function (plotData) {
-            plotData.name = refineString(plotData.name)
-            const color = plotData.color
-            if (!color) {
-              throw `Color not present for series ${plotData.name}`
-            }
-            color && (constantPlotSet[plotData.name].color = color)
-            const plotAxis = plotData.plotAxis || ['left', 'bottom']
-            constantPlotSet[plotData.name].plotAxis = plotAxis
-            const unit = plotAxis[0] === 'left' ? yLeft.unit : yRight.unit
-            constantPlotSet[plotData.name].unit = unit
-            isBoolean(plotData.visible) && (constantPlotSet[plotData.name].visible = plotData.visible)
-          })
-        }
-      }
-
-
-    }
-
     return {
       series: plotInfo, // newly updated series from user options having additional info of each series
-      constantSeries: constantPlotInfo,
       plotSet: eachPlotSet, // Info of each plot like color, max, min etc
-      constantPlotSet: constantPlotSet // Info of each constant plot like color, max, min etc
     }
   }
 }

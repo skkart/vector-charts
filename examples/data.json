@@ -39,20 +39,6 @@
                565.3333
             ]
          ]
-      },
-      "constantSeries":{
-         "columns":[
-            "Constant-1",
-            "Constant-2"
-         ],
-         "Constant-1":{
-            "unit":"bps",
-            "value":1.0E5
-         },
-         "Constant-2":{
-            "unit":"bps",
-            "value":4.44E4
-         }
       }
    }
 }

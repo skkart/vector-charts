@@ -151,14 +151,14 @@ export default class TimeSeriesTooltip extends ChartComponent {
   hover (xPos, yPos, displayData) {
     // Update displayPanel and line based on x position
     this.crossHairs && this.crossHairs.select('line')
-      .attr('transform', `translate('${xPos},0)`)
+      .attr('transform', `translate(${xPos},0)`)
       .attr('x1', this.opts.chart.margin.left)
-      .attr('y1', this.opts.chart.margin.top - constants.TOOLTIP_TOP_BUFFER * 2)
+      .attr('y1', this.opts.chart.margin.top - constants.TOOLTIP_TOP_BUFFER)
       .attr('x2', this.opts.chart.margin.left)
       .attr('y2', (this.opts.chart.chartHeight + this.opts.chart.margin.top))
     this.crossHairs.classed('vc-hidden', false)
 
-    var percentageDiff = xPos / this.opts.chart.chartWidth
+    let percentageDiff = xPos / this.opts.chart.chartWidth
 
     if (percentageDiff < 0.30) {
       percentageDiff = 0.30

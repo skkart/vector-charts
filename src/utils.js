@@ -24,6 +24,14 @@ export function isFunction (data) {
   return (typeof data === 'function')
 }
 
+export function isArray (data) {
+  return (data instanceof Array)
+}
+
+export function isInteger (data) {
+  return ((isNumber(data) && data % 1 === 0))
+}
+
 export function emptyFn (s) {
   return s
 }
@@ -102,4 +110,16 @@ export function truncateText (str, length = 50, ending = '...') {
   } else {
     return str
   }
+}
+
+export function getValueWithDecimals (val, decimal) {
+  decimal = isInteger(decimal) ? decimal : 3
+
+  if (isNaN(val)) {
+    val = 0
+    console.log('getValueWithDecimals changes value : ' + val + ' to 0')
+  }
+
+  return (Math.round(val * Math.pow(10, decimal)) / Math.pow(10, decimal))
+
 }
