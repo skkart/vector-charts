@@ -8,6 +8,7 @@ import BasicTSParser from '@/data-parser/BasicTSParser'
 import Tooltip from '@/tooltip/TimeSeriesTooltip'
 import MouseHandler from '@/mouse-handler'
 import Series from '@/series'
+import Zoom from '@/zoom'
 
 export default class TimeSeriesChart extends Chart {
   constructor (container, opts) {
@@ -100,6 +101,16 @@ export default class TimeSeriesChart extends Chart {
         chart: this,
       })
       this.chartComponentsArr.push(this.mouseHandler)
+    }
+
+    if (this.options.zoom.visible) {
+      this.zoomBrush = new Zoom({
+        chart: this,
+        onZoom: this.options.zoom.onXZoom,
+        onY1Zoom: this.options.zoom.onY1Zoom,
+        onY2Zoom: this.options.zoom.onY2Zoom
+      })
+      this.chartComponentsArr.push(this.zoomBrush)
     }
 
     if (this.options.series) {
