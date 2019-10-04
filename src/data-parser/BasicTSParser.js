@@ -1,5 +1,5 @@
 import ChartAxisParser from '@/data-parser/ChartAxisParser'
-import {getDateInUserTimezone, getObject, refineString, isNumber, isDate, isBoolean} from '@/utils'
+import {getDateFromTimezone, getObject, refineString, isNumber, isDate, isBoolean} from '@/utils'
 import each from 'lodash/each'
 
 export default class BasicTSParser extends ChartAxisParser {
@@ -53,7 +53,7 @@ export default class BasicTSParser extends ChartAxisParser {
         throw new Error('Invalid Time series JSON received: Timestamp Values must be in ascending order')
       }
       start = d[timeStampIndex]
-      d[timeStampIndex] = getDateInUserTimezone(d[timeStampIndex], true, userTz) // convert EPOC to date
+      d[timeStampIndex] = getDateFromTimezone(d[timeStampIndex], true, userTz) // convert EPOC to date
     })
 
     return {

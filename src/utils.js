@@ -1,4 +1,3 @@
-import moment from 'moment-timezone'
 
 export function isString (data) {
   return (typeof data === 'string')
@@ -36,9 +35,8 @@ export function emptyFn (s) {
   return s
 }
 
-export function getDateInUserTimezone (dt, isEpoc = true, userTz) {
+export function getDateFromTimezone (dt, isEpoc = true) {
   isEpoc = !!isEpoc
-  userTz = userTz || 'Etc/GMT'
 
   if (dt instanceof Date) {
     return dt
@@ -50,8 +48,7 @@ export function getDateInUserTimezone (dt, isEpoc = true, userTz) {
     dt = dt * 1000
   }
 
-  var mtTz = moment.tz(dt, userTz)
-  return new Date(mtTz.year(), mtTz.month(), mtTz.date(), mtTz.hours(), mtTz.minutes(), mtTz.seconds())
+  return new Date(dt)
 }
 
 export function refineString (realName, replaceChar) {
