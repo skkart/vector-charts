@@ -160,10 +160,10 @@ export default class TimeSeriesTooltip extends ChartComponent {
 
     let percentageDiff = xPos / this.opts.chart.chartWidth
 
-    if (percentageDiff < 0.30) {
-      percentageDiff = 0.30
+    if (percentageDiff < 0.3) {
+      percentageDiff = 0.3
     }
-    if (percentageDiff > 0.8) {
+    if (percentageDiff > 0.7) {
       percentageDiff = 1
     }
     this.$toolTipDiv
