@@ -1,6 +1,7 @@
 import ChartComponent from '@/charts/ChartComponent'
 import {isArray} from '@/utils'
 import Line from '@/series/Line'
+import StackArea from '@/series/StackArea'
 // import {findWhere} from 'lodash'
 
 export default class Series extends ChartComponent {
@@ -28,16 +29,16 @@ export default class Series extends ChartComponent {
     //     }));
     //   }, this)
 
-    // _.isArray(plotInfo.stack) && plotInfo.stack.forEach(function (plotData) {
-    //   this.plotSeries.push(new ac.plot.stackArea({
-    //     chart: this.opts.chart,
-    //     className: plotData.className || plotData.name,
-    //     plotAxis: plotData.plotAxis,
-    //     xAxisTarget: this.opts.chart.options.timeInfo.dataIndex,
-    //     stackData: data,
-    //     stackOrderMembers: plotData.stackOrderMembers
-    //   }))
-    // }, this)
+    isArray(plotInfo.stack) && plotInfo.stack.forEach((plotData) => {
+      this.plotSeries.push(new StackArea({
+        chart: this.opts.chart,
+        className: plotData.className || plotData.name,
+        plotAxis: plotData.plotAxis,
+        xAxisTarget: this.opts.chart.options.timeInfo.dataIndex,
+        stackData: data,
+        stackOrderMembers: plotData.stackOrderMembers
+      }))
+    })
 
     isArray(plotInfo.line) && plotInfo.line.forEach((plotData) => {
       this.plotSeries.push(new Line({
