@@ -24,13 +24,13 @@ export default class BarSeriesChart extends Chart {
     // Call Parent Impl
     super(container, opts)
 
+    // Add default options to chart
+    addDefaultBSOptions(this.options)
+
     // Run the dataParser for given JSON data
     if (isObject(this.dataParser)) {
       Object.assign(this.options, this.dataParser.dataExecutor())
     }
-
-    // Add default options to chart
-    addDefaultBSOptions(this.options)
 
     // Initilize all chart components needed for timeSeriesChart on exact order based on each dependencies
     this.chartInitilize()

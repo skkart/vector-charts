@@ -51,7 +51,7 @@ export default class BasicBSParser extends ChartAxisParser {
   constructXAxisInfo () {
     const dataOptions = this.dataOptions
     const seriesData = dataOptions.chartData
-    const dataIndex = -1
+    const dataIndex = 0
     return {
       timeInfo: {
         dataIndex,

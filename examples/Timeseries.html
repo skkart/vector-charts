@@ -239,15 +239,15 @@
         }
       }
 
-      // fetch('data3.json')
-      //   .then(status)
-      //   .then((response) => {
-      //     return response.json()
-      //   })
-      //   .then((jdata) => {
-      //     drawLineChart(jdata)
-      //     drawStackChart(jdata)
-      //   })
+      fetch('data3.json')
+        .then(status)
+        .then((response) => {
+          return response.json()
+        })
+        .then((jdata) => {
+          drawLineChart(jdata)
+          drawStackChart(jdata)
+        })
 
       fetch('dataBar.json')
         .then(status)
