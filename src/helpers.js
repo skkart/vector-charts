@@ -1,6 +1,6 @@
 import constants from '@/constants'
 import {getValueWithDecimals, isArray, isFunction} from '@/utils'
-import {timeFormat} from 'd3-time-format'
+import {timeFormat} from '@/d3Importer'
 
 export function addDefaultChartOptions (opts) {
 
@@ -12,54 +12,10 @@ export function addDefaultChartOptions (opts) {
     minWidth: 0
   }, opts.chart)
 
-  // General Options to both chartType
   opts.tooltip = Object.assign({
     visible: true,
     format: false // Use aryakaCharts internal tooltip formatter to show raw data
   }, (opts.tooltip || {}))
-
-  if (!opts.tooltip.format) {
-    const formatTime = timeFormat('%d %b %Y  %H:%M:%S')
-    opts.tooltip.format = function (d) {
-      if (!d || !isArray(d)) {
-        return ''
-      }
-      const plotSet = this.options.plotSet
-      const timeInfo = this.options.timeInfo
-      const zoneOffset = this.options.xAxis.zoneOffset || ''
-      const yAxis = this.options.yAxis
-
-      let tableStr = `<table><tbody><tr>
-            <td class="value_full" colspan="2">
-            ${formatTime(d[timeInfo.dataIndex])} ${zoneOffset}
-            </td></tr>`
-
-      for (const key in plotSet) {
-        const val = d[plotSet[key].dataIndex]
-        if (!plotSet[key].visible || isNaN(val)) {
-          continue
-        }
-
-        // Find Y Axis format is preset
-        const yOrient = yAxis[plotSet[key].plotAxis[0]]
-        const format = yOrient.format || defaultValueFormat
-
-        tableStr += `<tr>
-        <td class='name'>
-            <span style='background-color:${plotSet[key].color}'></span>${plotSet[key].name}
-        </td>
-        <td class='value'>
-            ${format(val, plotSet[key].unit)}
-        </td>
-        </tr>`
-      }
-
-      tableStr += '</tbody></table>'
-
-      return tableStr
-    }
-  }
-
 
   opts.legend = Object.assign({
     visible: true,
@@ -149,6 +105,143 @@ export function addDefaultTSOptions (opts) {
   opts.zoom = Object.assign({
     visible: false
   }, (opts.zoom || {}))
+
+  // General Options to both chartType
+  opts.tooltip = Object.assign({
+    visible: true,
+    format: false // Use aryakaCharts internal tooltip formatter to show raw data
+  }, (opts.tooltip || {}))
+
+  if (!isFunction(opts.tooltip.format)) {
+    const formatTime = timeFormat('%d %b %Y  %H:%M:%S')
+    opts.tooltip.format = function (d) {
+      if (!d || !isArray(d)) {
+        return ''
+      }
+      const plotSet = this.options.plotSet
+      const timeInfo = this.options.timeInfo
+      const zoneOffset = this.options.xAxis.zoneOffset || ''
+      const yAxis = this.options.yAxis
+
+      let tableStr = `<table><tbody><tr>
+            <td class="value_full" colspan="2">
+            ${formatTime(d[timeInfo.dataIndex])} ${zoneOffset}
+            </td></tr>`
+
+      for (const key in plotSet) {
+        const val = d[plotSet[key].dataIndex]
+        if (!plotSet[key].visible || isNaN(val)) {
+          continue
+        }
+
+        // Find Y Axis format is preset
+        const yOrient = yAxis[plotSet[key].plotAxis[0]]
+        const format = yOrient.format || defaultValueFormat
+
+        tableStr += `<tr>
+        <td class='name'>
+            <span style='background-color:${plotSet[key].color}'></span>${plotSet[key].name}
+        </td>
+        <td class='value'>
+            ${format(val, plotSet[key].unit)}
+        </td>
+        </tr>`
+      }
+
+      tableStr += '</tbody></table>'
+
+      return tableStr
+    }
+  }
+
+  addDefaultChartOptions(opts)
+
+  return opts
+}
+
+export function addDefaultBSOptions (opts) {
+  // Add defaults to xAxis
+  opts.xAxis = Object.assign({
+    bottom: {
+      unit: constants.UNITS_DEF,
+      visible: true
+    }
+  }, (opts.xAxis || {}))
+
+
+  // If yAxis is not specified, then default is left and its value axis with unit
+  if (!opts.yAxis) {
+    opts.yAxis = {
+      left: {}
+    }
+  }
+
+  if (opts.yAxis.left) {
+    opts.yAxis.left = Object.assign({
+      unit: constants.UNITS_DEF,
+      min: 0, // Start plotting Y Axis from 0
+      visible: true
+    }, opts.yAxis.left)
+  }
+
+  if (opts.yAxis.right) {
+    opts.yAxis.right = Object.assign({
+      unit: constants.UNITS_DEF,
+      min: 0, // Start plotting Y Axis from 0
+      visible: true
+    }, opts.yAxis.right)
+  }
+
+  opts.zoom = Object.assign({
+    visible: false
+  }, (opts.zoom || {}))
+
+
+  // General Options to both chartType
+  opts.tooltip = Object.assign({
+    visible: true,
+    format: false // Use aryakaCharts internal tooltip formatter to show raw data
+  }, (opts.tooltip || {}))
+
+  if (!isFunction(opts.tooltip.format)) {
+    opts.tooltip.format = function (d) {
+      if (!d || !isArray(d)) {
+        return ''
+      }
+      const plotSet = this.options.plotSet
+      const timeInfo = this.options.timeInfo
+      const yAxis = this.options.yAxis
+
+      let tableStr = `<table><tbody><tr>
+            <td class="value_full" colspan="2">
+            ${d[timeInfo.dataIndex]}
+            </td></tr>`
+
+      for (const key in plotSet) {
+        const val = d[plotSet[key].dataIndex]
+        if (!plotSet[key].visible || isNaN(val)) {
+          continue
+        }
+
+        // Find Y Axis format is preset
+        const yOrient = yAxis[plotSet[key].plotAxis[0]]
+        const format = yOrient.format || defaultValueFormat
+
+        tableStr += `<tr>
+        <td class='name'>
+            <span style='background-color:${plotSet[key].color}'></span>
+        </td>
+        <td class='value'>
+            ${format(val, plotSet[key].unit)}
+        </td>
+        </tr>`
+      }
+
+      tableStr += '</tbody></table>'
+
+      return tableStr
+    }
+  }
 
   addDefaultChartOptions(opts)
 

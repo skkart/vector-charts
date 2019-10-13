@@ -35,7 +35,7 @@ export function emptyFn (s) {
   return s
 }
 
-export function getDateFromTimezone (dt, isEpoc = true) {
+export function getDateFromEpoc (dt, isEpoc = true) {
   isEpoc = !!isEpoc
 
   if (dt instanceof Date) {

@@ -1,9 +1,6 @@
 import ChartComponent from '@/charts/ChartComponent'
 import constants from '@/constants'
-import {
-  area as d3Area, stack as d3Stack,
-  stackOrderNone as d3StackOrderNone, stackOffsetNone as d3StackOffsetNone
-} from 'd3-shape'
+import {area, stack, stackOrderNone, stackOffsetNone} from '@/d3Importer'
 import {getObject} from '@/utils'
 
 export default class StackArea extends ChartComponent {
@@ -40,9 +37,9 @@ export default class StackArea extends ChartComponent {
       y = getObject(this.opts, 'chart.yAxis2.scale')
     }
 
-    this.opts.d3Stack = d3Stack()
+    this.opts.d3Stack = stack()
 
-    this.area = d3Area()
+    this.area = area()
       .x(function (d, i) {
         return x(d.data[self.opts.xAxisTarget])
       })
@@ -60,8 +57,8 @@ export default class StackArea extends ChartComponent {
     const eachPlotSet = this.opts.chart.options.plotSet
 
     this.opts.d3Stack.keys(this.opts.stackOrderIndex) // specify the stack series names in array format
-    this.opts.d3Stack.order(d3StackOrderNone) // use the given series order.
-    this.opts.d3Stack.offset(d3StackOffsetNone) // apply a zero baseline on start
+    this.opts.d3Stack.order(stackOrderNone) // use the given series order.
+    this.opts.d3Stack.offset(stackOffsetNone) // apply a zero baseline on start
 
     // Show stack plot for only series which are visible
     const stackVisibleOrder = this.opts.stackOrderMembers.filter(function (ele) {

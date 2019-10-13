@@ -1,7 +1,6 @@
 import ChartComponent from '@/charts/ChartComponent'
 import {getObject, isFunction} from '@/utils'
-import {bisector} from 'd3-array'
-import {mouse} from 'd3-selection'
+import {bisector, d3Mouse} from '@/d3Importer'
 import {each, filter} from 'lodash'
 import constants from '@/constants'
 
@@ -57,8 +56,8 @@ export default class TimeSeriesTooltip extends ChartComponent {
 
       const mouseEvt = function (d) {
         // On mousemove of x overlay, find x,y values and update tooltip
-        const xMouse = mouse(this)[0]
-        const yMouse = mouse(this)[1]
+        const xMouse = d3Mouse(this)[0]
+        const yMouse = d3Mouse(this)[1]
         const xVal = xScale.invert(xMouse) // find xAxis date for mouse position
 
         // Do binary search of data set from 2nd data set to end

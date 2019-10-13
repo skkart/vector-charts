@@ -1,6 +1,7 @@
 export default {
   TIME_SERIES_CHART_TYPE: 'timeseries',
   PIE_SERIES_CHART_TYPE: 'pieseries',
+  BAR_SERIES_CHART_TYPE: 'barseries',
   UNITS_TIME: 'time',
   UNITS_DEF: 'scale',
   DIR_TOP: 'top',
@@ -13,5 +14,7 @@ export default {
   BRUSHY_BUFFER: 10,
   Y_AXIS_SPACE: 30,
   TIME_FORMAT_BUFFER: 60 * 60 * 24 * 1000, // 2days,
-  TOOLTIP_TOP_BUFFER: 20
+  TOOLTIP_TOP_BUFFER: 20,
+  GROUPED_BAR: 'grouped',
+  STACKED_BAR: 'stacked',
 }

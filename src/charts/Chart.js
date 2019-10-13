@@ -1,6 +1,6 @@
 import {isObject, isString, throttle} from '@/utils'
 import uniqueId from 'lodash/uniqueId'
-import {select} from 'd3-selection'
+import {select} from '@/d3Importer'
 import ChartComponent from '@/charts/ChartComponent'
 
 export default class Chart extends ChartComponent {

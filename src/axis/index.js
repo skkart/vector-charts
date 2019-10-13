@@ -1,6 +1,8 @@
 import ChartComponent from '@/charts/ChartComponent'
-import {axisBottom, axisTop, axisLeft, axisRight} from 'd3-axis'
-import {scaleBand, scaleLinear, scaleTime} from 'd3-scale'
+import {
+  axisBottom, axisTop, axisLeft, axisRight,
+  scaleBand, scaleLinear, scaleTime
+} from '@/d3Importer'
 import constants from '@/constants'
 import {emptyFn, isFunction, isNumber, truncateText} from '@/utils'
 
