@@ -1,0 +1,32 @@
+{
+  "ResJSON":{
+    "barseries":{
+      "columns":[
+        "Names",
+        "Count"
+      ],
+      "values":[
+        [
+          "Series A",
+          752.8000
+        ],
+        [
+          "Series B",
+          647.3333
+        ],
+        [
+          "Series C",
+          357.6000
+        ],
+        [
+          "Series D",
+          110.9333
+        ],
+        [
+          "Series E",
+          105.0667
+        ]
+      ]
+    }
+  }
+}

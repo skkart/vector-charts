@@ -1,7 +1,7 @@
 import ChartComponent from '@/charts/ChartComponent'
 import constants from '@/constants'
 import {getObject} from '@/utils'
-import {line as d3Line} from 'd3-shape'
+import {line} from '@/d3Importer'
 
 export default class Line extends ChartComponent {
 
@@ -17,20 +17,20 @@ export default class Line extends ChartComponent {
       visible: true
     }, opts)
 
-    var self = this
+    const self = this
 
     // Find x and y axis based on plotAxis
-    var x = getObject(this.opts, 'chart.xAxis.scale')
+    let x = getObject(this.opts, 'chart.xAxis.scale')
     if (this.opts.plotAxis.indexOf(constants.DIR_TOP) > -1) {
       x = getObject(this.opts, 'chart.xAxis2.scale')
     }
 
-    var y = getObject(this.opts, 'chart.yAxis.scale')
+    let y = getObject(this.opts, 'chart.yAxis.scale')
     if (this.opts.plotAxis.indexOf(constants.DIR_RIGHT) > -1) {
       y = getObject(this.opts, 'chart.yAxis2.scale')
     }
 
-    this.line = d3Line()
+    this.line = line()
 
     if (this.opts.yAxisTarget) {
       // For normal series, yAxisTarget refers to the index of this series in data Arr
@@ -49,14 +49,14 @@ export default class Line extends ChartComponent {
   }
 
   draw () {
-    var self = this
+    const self = this
     this.lineTag = this.opts.chart.graphZone.selectAll('.vc-line-' + this.opts.className)
       .data([this.opts.lineData])
       .enter()
       .append('g')
       .attr('class', 'vc-line-plot vc-line-' + this.opts.className)
 
-    var clipElement = this.opts.chart.$container.find('svg clipPath')
+    const clipElement = this.opts.chart.$container.find('svg clipPath')
     // Adding the lines series for data to be shown
     this.lineTag.append('path')
       .attr('clip-path', 'url(#' + clipElement.attr('id') + ')') // display graphZone of same size as clip-path defined
@@ -75,7 +75,7 @@ export default class Line extends ChartComponent {
 
   // Update happens when the chart is resized
   update () {
-    var self = this
+    const self = this
     this.lineTag && this.lineTag.select('path').attr('d', function (d) {
       return self.line(d.values)
     })
@@ -89,8 +89,8 @@ export default class Line extends ChartComponent {
 
   // Redraw is called when series is toggled from Legends
   redraw () {
-    var eachPlotSet = this.opts.chart.options.plotSet
-    var seriesName = this.opts.lineData.name
+    const eachPlotSet = this.opts.chart.options.plotSet
+    const seriesName = this.opts.lineData.name
     // Remove line series
     this.lineTag && this.lineTag.remove()
 

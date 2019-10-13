@@ -1,7 +1,6 @@
 import ChartComponent from '@/charts/ChartComponent'
 import {getObject, isFunction, emptyFn} from '@/utils'
-import {brushX, brushY} from 'd3-brush'
-import {event} from 'd3-selection'
+import {brushX, brushY, d3Event} from '@/d3Importer'
 import constants from '@/constants'
 
 export default class Zoom extends ChartComponent {
@@ -36,11 +35,11 @@ export default class Zoom extends ChartComponent {
 
       // Call this event when xAxis brush is ended
       this.brushX.on('end', function () {
-        if (!event.selection) {
+        if (!d3Event.selection) {
           return
         }
 
-        const d0 = event.selection.map(xScale.invert)
+        const d0 = d3Event.selection.map(xScale.invert)
         // find x1 and x2
           
         const d1 = d0 && d0.map(Math.round) // round both values
@@ -51,6 +50,19 @@ export default class Zoom extends ChartComponent {
           .css({
             cursor: 'auto'
           })
+
+        // d1 = d1
+        //   .sort(function (a, b) {
+        //     return (a - b)
+        //   })
+
+        self.opts.chart.xAxis.modifyAxisProps({
+          domainScale: d1 // Change domain of X axis upon horizontal zoom
+        })
+
+        self.opts.chart.series.update() // Update all plotSeries for new YAxis domain change
+
+
         // Used onZoom.call(), so that external function can have access of chart Instance
         self.opts && self.opts.onZoom.call(self.opts.chart, d1[0], d1[1])
 
@@ -66,12 +78,12 @@ export default class Zoom extends ChartComponent {
 
       // Call this event when yAxis brush is ended
       this.brushYLeft.on('end', function () {
-        if (!event.selection) {
+        if (!d3Event.selection) {
           return
         }
         self.brushYLeftDiv.call(self.brushYLeft.move, null)
 
-        const d0 = event.selection.map(yScaleLeft.invert)
+        const d0 = d3Event.selection.map(yScaleLeft.invert)
 
           
         const d1 = d0 && d0.map(Math.round)
@@ -99,12 +111,12 @@ export default class Zoom extends ChartComponent {
         .attr('class', 'vc-brushY-right')
 
       this.brushYRight.on('end', function () {
-        if (!event.selection) {
+        if (!d3Event.selection) {
           return
         }
         self.brushYRightDiv.call(self.brushYRight.move, null)
 
-        const d0 = event.selection.map(yScaleRight.invert)
+        const d0 = d3Event.selection.map(yScaleRight.invert)
 
           
         const d1 = d0 && d0.map(Math.round)

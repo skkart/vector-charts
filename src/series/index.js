@@ -2,7 +2,7 @@ import ChartComponent from '@/charts/ChartComponent'
 import {isArray} from '@/utils'
 import Line from '@/series/Line'
 import StackArea from '@/series/StackArea'
-// import {findWhere} from 'lodash'
+import Bar from '@/series/Bar'
 
 export default class Series extends ChartComponent {
   constructor (opts) {
@@ -57,16 +57,16 @@ export default class Series extends ChartComponent {
       }))
     })
 
-    // _.isArray(plotInfo.bar) && plotInfo.bar.forEach(function (plotData) {
-    //   this.plotSeries.push(new ac.plot.bar({
-    //     chart: this.opts.chart,
-    //     className: plotData.className || plotData.name,
-    //     plotAxis: plotData.plotAxis,
-    //     xAxisTarget: this.opts.chart.options.timeInfo.dataIndex,
-    //     barOrderMembers: plotData.barOrderMembers,
-    //     barData: data
-    //   }))
-    // }, this)
+    isArray(plotInfo.bar) && plotInfo.bar.forEach((plotData) => {
+      this.plotSeries.push(new Bar({
+        chart: this.opts.chart,
+        className: plotData.className || plotData.name,
+        plotAxis: plotData.plotAxis,
+        xAxisTarget: this.opts.chart.options.timeInfo.dataIndex,
+        barOrderMembers: plotData.barOrderMembers,
+        barData: data
+      }))
+    })
   }
 
   draw () {
