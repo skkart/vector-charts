@@ -17,7 +17,7 @@ export default class BasicTooltip extends ChartComponent {
   }
 
   draw () {
-    this.$toolTipDiv = $('<div></div>').addClass('ac-tooltip-display ' + this.opts.className)
+    this.$toolTipDiv = $('<div></div>').addClass('vc-tooltip-display ' + this.opts.className)
     this.opts.chart.$container
       .append(this.$toolTipDiv)
   }

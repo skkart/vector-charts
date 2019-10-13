@@ -205,7 +205,11 @@ export function addDefaultBSOptions (opts) {
 
   if (!isFunction(opts.tooltip.format)) {
     opts.tooltip.format = function (d) {
-      if (!d || !isArray(d)) {
+      let dataArr = d
+      if (d && d.val) {
+        dataArr = d.val
+      }
+      if (!isArray(dataArr)) {
         return ''
       }
       const plotSet = this.options.plotSet
@@ -214,11 +218,11 @@ export function addDefaultBSOptions (opts) {
 
       let tableStr = `<table><tbody><tr>
             <td class="value_full" colspan="2">
-            ${d[timeInfo.dataIndex]}
+            ${dataArr[timeInfo.dataIndex]}
             </td></tr>`
 
       for (const key in plotSet) {
-        const val = d[plotSet[key].dataIndex]
+        const val = dataArr[plotSet[key].dataIndex]
         if (!plotSet[key].visible || isNaN(val)) {
           continue
         }
