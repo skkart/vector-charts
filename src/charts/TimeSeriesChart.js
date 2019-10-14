@@ -9,6 +9,7 @@ import Tooltip from '@/tooltip/TimeSeriesTooltip'
 import MouseHandler from '@/mouse-handler'
 import Series from '@/series'
 import Zoom from '@/zoom'
+import TimeSeriesLegend from '@/legend/TimeSeriesLegend'
 
 export default class TimeSeriesChart extends Chart {
   constructor (container, opts) {
@@ -119,6 +120,17 @@ export default class TimeSeriesChart extends Chart {
       })
       // Register the component for draw, update, showHide and remove
       this.chartComponentsArr.push(this.series)
+    }
+
+    if (this.options.legend.visible) {
+      this.legends = new TimeSeriesLegend({
+        chart: this,
+        legendPrefix: this.options.legend.legendPrefix,
+        position: constants.DIR_TOP,
+        disableSeriesToggle: this.options.legend.disableSeriesToggle,
+        onLegendChange: this.options.legend.onLegendChange
+      })
+      this.chartComponentsArr.push(this.legends)
     }
   }
 
