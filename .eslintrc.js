@@ -49,6 +49,7 @@ module.exports = {
     'no-useless-constructor': 0,
     'no-throw-literal': 0,
     'no-trailing-spaces': 0,
-    'eol-last': 0
+    'eol-last': 0,
+    'new-cap': 0
   }
 }
