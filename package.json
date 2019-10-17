@@ -15,8 +15,8 @@
     "start": "http-server ./examples/ -p 9088",
     "build": "webpack",
     "dev": "webpack --config webpack.dev.js",
-    "postdev": "cp -Rf dist examples/",
-    "postbuild": "cp -Rf dist examples/"
+    "postdev": "cp -Rf dist/* examples/",
+    "postbuild": "cp -Rf dist/* examples/"
   },
   "dependencies": {
     "d3-array": "^2.3.1",

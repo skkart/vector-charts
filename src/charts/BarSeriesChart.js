@@ -5,8 +5,8 @@ import {addDefaultBSOptions} from '@/helpers'
 import constants from '@/constants'
 import ChartAxisParser from '@/data-parser/ChartAxisParser'
 import Tooltip from '@/tooltip/BasicTooltip'
-import Series from '@/series'
 import BasicBSParser from '@/data-parser/BasicBSParser'
+import BarSeries from '@/series/BarSeries'
 
 export default class BarSeriesChart extends Chart {
   constructor (container, opts) {
@@ -94,7 +94,7 @@ export default class BarSeriesChart extends Chart {
     }
 
     if (this.options.series) {
-      this.series = new Series({
+      this.series = new BarSeries({
         chart: this
       })
       // Register the component for draw, update, showHide and remove
