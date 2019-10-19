@@ -1,5 +1,5 @@
 import constants from '@/constants'
-import {getValueWithDecimals, isArray, isFunction} from '@/utils'
+import {chartCounter, getValueWithDecimals, isArray, isFunction} from '@/utils'
 import {timeFormat} from '@/d3Importer'
 
 export function addDefaultChartOptions (opts) {
@@ -11,6 +11,7 @@ export function addDefaultChartOptions (opts) {
     maxWidth: Number.MAX_SAFE_INTEGER,
     minWidth: 0
   }, opts.chart)
+  opts.chart.counter = chartCounter()
 
   opts.tooltip = Object.assign({
     visible: true,
@@ -284,6 +285,8 @@ export function addDefaultPSOptions (opts) {
   }
 
   addDefaultChartOptions(opts)
+
+  opts.legend.position = constants.DIR_RIGHT
 
   return opts
 }

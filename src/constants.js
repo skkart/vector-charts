@@ -33,4 +33,5 @@ export default {
   PIE_HOVER_BUFFER: 15,
   PIE_ARC_STROKE: 1,
   PIE_DULL_OPACITY: 0.7,
+  PIE_POS_LEGEND: 65,
 }

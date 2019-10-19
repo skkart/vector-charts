@@ -18,7 +18,7 @@ export default class Zoom extends ChartComponent {
     const xScale = getObject(this.opts, 'chart.xAxis.scale') || false
     const yScaleLeft = getObject(this.opts, 'chart.yAxis.scale') || false
     const yScaleRight = getObject(this.opts, 'chart.yAxis2.scale') || false
-    let $brushOverlay = null
+    let brushOverlay = null
     if (xScale) {
       // Create x axis brush for Zoom operation
       this.brushX = brushX()
@@ -31,7 +31,7 @@ export default class Zoom extends ChartComponent {
       this.brushXDiv = this.opts.chart.mouseHandler.mouseBrush
         .call(this.brushX)
 
-      $brushOverlay = $(this.brushXDiv.node()).find('rect.overlay')
+      brushOverlay = this.brushXDiv.selectAll('rect.overlay')
 
       // Call this event when xAxis brush is ended
       this.brushX.on('end', function () {
@@ -46,10 +46,7 @@ export default class Zoom extends ChartComponent {
 
         // clear Brush
         self.brushXDiv.call(self.brushX.move, null)
-        $brushOverlay
-          .css({
-            cursor: 'auto'
-          })
+        brushOverlay.style('cursor', 'auto')
 
         // d1 = d1
         //   .sort(function (a, b) {
@@ -136,20 +133,14 @@ export default class Zoom extends ChartComponent {
       })
     }
 
-    $brushOverlay && this.opts.chart.mouseHandler.register(function () {
+    brushOverlay && this.opts.chart.mouseHandler.register(function () {
       // When mouse is clicked or down, enable zoom brush and its mouse cursor
-      $brushOverlay
+      brushOverlay
         .on('mousedown', function () {
-          $(this)
-            .css({
-              cursor: 'col-resize'
-            })
+          brushOverlay.style('cursor', 'col-resize')
         })
         .on('click', function () {
-          $(this)
-            .css({
-              cursor: 'auto'
-            })
+          brushOverlay.style('cursor', 'auto')
         })
     })
     this.update()
