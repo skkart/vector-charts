@@ -1,5 +1,5 @@
 import ChartComponent from '@/charts/ChartComponent'
-import {getObject, isFunction} from '@/utils'
+import {elementOffset, getObject, isFunction} from '@/utils'
 import {bisector, d3Mouse} from '@/d3Importer'
 import {each, filter} from 'lodash'
 import constants from '@/constants'
@@ -24,10 +24,9 @@ export default class TimeSeriesTooltip extends ChartComponent {
 
   draw () {
     this.crossHairs = false
-    this.$toolTipDiv = $('<div></div>').addClass('vc-tooltip-display')
-    this.opts.chart.$container
-      .append(this.$toolTipDiv)
-
+    this.toolTipDiv = this.opts.chart.container
+      .append('div')
+      .attr('class', 'vc-tooltip-display ' + this.opts.className)
 
     if (this.opts.crossHairs.enable === true) {
       this.crossHairs = this.opts.chart.svg
@@ -138,8 +137,11 @@ export default class TimeSeriesTooltip extends ChartComponent {
         .on('mouseout', function () {
           self.hide()
         })
+        .on('mousedown', function () {
+          self.hide()
+        })
 
-      $(mouseHandler.mouseBrush.node()).find('rect.overlay')
+      mouseHandler.mouseBrush.select('rect.overlay')
         .on('mousedown', function () {
           self.hide()
         })
@@ -155,7 +157,7 @@ export default class TimeSeriesTooltip extends ChartComponent {
       .attr('y1', this.opts.chart.margin.top - constants.TOOLTIP_TOP_BUFFER)
       .attr('x2', this.opts.chart.margin.left)
       .attr('y2', (this.opts.chart.chartHeight + this.opts.chart.margin.top))
-    this.crossHairs.classed('vc-hidden', false)
+    this.showHide(true)
 
     let percentageDiff = xPos / this.opts.chart.chartWidth
 
@@ -165,33 +167,30 @@ export default class TimeSeriesTooltip extends ChartComponent {
     if (percentageDiff > 0.7) {
       percentageDiff = 0.95
     }
-    this.$toolTipDiv
-      .css({
-        left: Math.round(this.opts.chart.$container.position() // left position of chart on screen
-          .left + this.opts.chart.margin.left + xPos - this.$toolTipDiv.width() * percentageDiff) + 'px',
-        top: Math.round(this.opts.chart.$container.position() // top position of chart on screen
-          .top - this.$toolTipDiv.height() - 5 + constants.TOOLTIP_TOP_BUFFER * 2) + 'px',
-        display: 'inline-block'
-      })
+
+    const box = elementOffset(this.toolTipDiv)
+    const rootPos = elementOffset(this.opts.chart.container)
+    const left = Math.round(rootPos.left + this.opts.chart.margin.left + xPos - box.width * percentageDiff) + 'px'
+    const top = Math.round(rootPos.top - box.height - 5 + constants.TOOLTIP_TOP_BUFFER * 2) + 'px'
+
+
+    this.toolTipDiv
+      .style('left', left)
+      .style('top', top)
+      .style('display', 'inline-block')
       .html(this.opts.format.call(this.opts.chart, displayData)) // Used format.call(), so that external fun can have access of chart Instance
   }
 
   showHide (showFlag) {
     showFlag = !!showFlag
 
-    if (showFlag) {
-      this.$toolTipDiv && this.$toolTipDiv.show()
-    } else {
-      this.$toolTipDiv && this.$toolTipDiv.hide()
-    }
-
     this.crossHairs && this.crossHairs.classed('vc-hidden', !showFlag)
-
+    this.toolTipDiv && this.toolTipDiv.classed('vc-hidden', !showFlag)
     this.opts.visible = showFlag
   }
 
   remove () {
-    this.$toolTipDiv && this.$toolTipDiv.remove()
+    this.toolTipDiv && this.toolTipDiv.remove()
     this.crossHairs && this.crossHairs.remove()
     this.opts = null
   }
