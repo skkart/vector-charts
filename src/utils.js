@@ -61,10 +61,10 @@ export function refineString (realName, replaceChar) {
 
 export function getObject (obj, dotKey, def = null) {
 
-  var mdl = obj
-  var keySplit = dotKey.split('.')
+  let mdl = obj
+  const keySplit = dotKey.split('.')
 
-  for (var i = 0; i < keySplit.length; i++) {
+  for (let i = 0; i < keySplit.length; i++) {
     if (mdl) {
       mdl = mdl[keySplit[i]]
     } else {
@@ -119,4 +119,23 @@ export function getValueWithDecimals (val, decimal) {
 
   return (Math.round(val * Math.pow(10, decimal)) / Math.pow(10, decimal))
 
+}
+
+let chartCount = 0
+export function chartCounter () {
+  return ++chartCount
+}
+
+export function elementOffset (d3Ele) {
+  const offset = d3Ele.node().getBoundingClientRect()
+  return {
+    right: offset.right,
+    bottom: offset.bottom,
+    width: offset.width,
+    height: offset.height,
+    x: offset.x,
+    y: offset.y,
+    top: (offset.top + window.scrollY),
+    left: (offset.left + window.scrollX)
+  }
 }

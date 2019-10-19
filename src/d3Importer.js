@@ -17,6 +17,7 @@ export {interpolate} from 'd3-interpolate'
 
 export {
   select,
+  selectAll,
   mouse as d3Mouse,
   event as d3Event
 } from 'd3-selection'

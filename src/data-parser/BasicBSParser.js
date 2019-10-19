@@ -104,7 +104,7 @@ export default class BasicBSParser extends ChartAxisParser {
 
 
         // Calculate Max and Min for each plots series
-        var valData = 0
+        let valData = 0
         data.forEach(function (d) {
           each(eachPlotSet, function (eachPlot) {
             valData = d[eachPlot.dataIndex]
@@ -124,7 +124,7 @@ export default class BasicBSParser extends ChartAxisParser {
       for (key in plotInfo) {
         if (key === 'bar') {
           plotInfo[key].forEach(function (plotData) {
-            var memberArr = plotData.barOrderMembers
+            const memberArr = plotData.barOrderMembers
             memberArr.forEach(function (member) {
               if (eachPlotSet[member.name].visible && eachPlotSet[member.name].plotAxis[0] === 'left' && eachPlotSet[member.name].maxVal > allMax) {
                 allMax = eachPlotSet[member.name].maxVal
