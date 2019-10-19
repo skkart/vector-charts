@@ -10,6 +10,7 @@ import MouseHandler from '@/mouse-handler'
 import Zoom from '@/zoom'
 import TimeSeriesLegend from '@/legend/TimeSeriesLegend'
 import TimeSeries from '@/series/TimeSeries'
+import {select} from '@/d3Importer'
 
 export default class TimeSeriesChart extends Chart {
   constructor (container, opts) {
@@ -228,15 +229,13 @@ export default class TimeSeriesChart extends Chart {
       .attr('class', 'vc-axis')
 
     for (const axis in reScaleAxis) {
-      const ticksArr = this.$container.find('svg ' + reScaleAxis[axis].class).find('text')
+      const ticksArr = this.container.select('svg ' + reScaleAxis[axis].class).selectAll('text')
       ticksArr.each(function (i) {
-        const tickHtml = $(ticksArr[i])
-          .text() || ''
+        const tickHtml = select(this).text() || ''
         if (tickHtml.length > reScaleAxis[axis].maxText.length) {
           reScaleAxis[axis].maxText = tickHtml
         }
       })
-
 
       dummyG.selectAll('.dummyText')
         .data([reScaleAxis[axis].maxText])
@@ -246,7 +245,6 @@ export default class TimeSeriesChart extends Chart {
         .each(function (d, i) {
           // Compute requiredWidth for the Max text
           requiredWidth = this.getComputedTextLength()
-          $(this).remove() // remove it just after displaying
         })
 
       // Update respective margin to fit in ticks text
