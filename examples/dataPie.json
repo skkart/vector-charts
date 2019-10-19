@@ -1,0 +1,37 @@
+{
+   "ResJSON":{
+      "pieseries":{
+         "values":[{
+            "color": "#8866CC",
+            "id": 737,
+            "name": "Arc1",
+            "value": 500
+         }, {
+            "color": "#FFCC33",
+            "id": 3737,
+            "name": "Arc2",
+            "value": 200
+         }, {
+            "color": "#33CCFF",
+            "id": 3773,
+            "name": "Arc3",
+            "value": 600
+         }, {
+            "color": "#CCEBC5",
+            "id": 37037,
+            "name": "Arc4",
+            "value": 800
+         }, {
+            "color": "#F47F72",
+            "id": 7737,
+            "name": "Arc5",
+            "value": 300
+         }, {
+            "color": "#B4D56C",
+            "id": 37,
+            "name": "Arc6",
+            "value": 100
+         }]
+      }
+   }
+}
