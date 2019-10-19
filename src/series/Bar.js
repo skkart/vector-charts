@@ -76,7 +76,7 @@ export default class Bar extends ChartComponent {
     })
 
 
-    const clipElement = this.opts.chart.$container.find('svg clipPath')
+    const clipElement = this.opts.chart.container.select('svg clipPath')
     this.barSeries = this.opts.chart.graphZone.selectAll('.vc-bar-series')
       .data(this.opts.barStack)
       .enter()
