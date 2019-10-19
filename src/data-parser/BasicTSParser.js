@@ -1,6 +1,5 @@
 import ChartAxisParser from '@/data-parser/ChartAxisParser'
 import {getDateFromEpoc, getObject, refineString, isNumber, isDate, isBoolean} from '@/utils'
-import each from 'lodash/each'
 
 export default class BasicTSParser extends ChartAxisParser {
   constructor (opts) {
@@ -111,10 +110,11 @@ export default class BasicTSParser extends ChartAxisParser {
 
         if (findEachPlotRange) {
           // Reset range for each plot for finding min , max
-          each(eachPlotSet, function (eachPlot) {
+          for (const plot in eachPlotSet) {
+            const eachPlot = eachPlotSet[plot]
             eachPlot.minVal = Infinity
             eachPlot.maxVal = -Infinity
-          })
+          }
         }
 
         // Reset stack range for each stack for finding min , max
@@ -126,7 +126,8 @@ export default class BasicTSParser extends ChartAxisParser {
         let valData = 0
         data.forEach(function (d) {
           if (findEachPlotRange) {
-            each(eachPlotSet, function (eachPlot) {
+            for (const plot in eachPlotSet) {
+              const eachPlot = eachPlotSet[plot]
               valData = d[eachPlot.dataIndex]
               if (valData < eachPlot.minVal) {
                 eachPlot.minVal = valData
@@ -134,7 +135,7 @@ export default class BasicTSParser extends ChartAxisParser {
               if (valData > eachPlot.maxVal) {
                 eachPlot.maxVal = valData
               }
-            })
+            }
           }
 
           plotInfo.stack && plotInfo.stack.forEach(function (plotData) {
