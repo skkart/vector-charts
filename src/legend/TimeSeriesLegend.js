@@ -42,7 +42,6 @@ export default class TimeSeriesLegend extends ChartComponent {
           maxLenLegend = d
         }
         textWidth.push(thisWidth)
-        $(this).remove() // remove them just after displaying them
       })
 
     // Fill the spacing Arr having position for each legends on horizontal order
@@ -220,7 +219,7 @@ export default class TimeSeriesLegend extends ChartComponent {
   update () {
     // Display in vertical order
     const self = this
-    const $legendText = this.opts.chart.$container.find('svg .vc-legend-label')
+    const legendText = this.opts.chart.container.selectAll('svg .vc-legend-label')
     let basicWidth = this.opts.maxWidthLegend + this.opts.chart.margin.left + this.opts.chart.margin.right
 
     if (this.opts.position === constants.DIR_RIGHT) {
@@ -257,7 +256,7 @@ export default class TimeSeriesLegend extends ChartComponent {
               .append('svg:title')
               .text(seriesName)
           })
-        $legendText.hide()
+        legendText.classed('vc-hidden', true)
 
         if (self.opts.chart.chartWidth < basicWidth) {
           // display box vertically
@@ -288,7 +287,7 @@ export default class TimeSeriesLegend extends ChartComponent {
               select(this).select('rect')
                 .html('')
             })
-          $legendText.show()
+          legendText.classed('vc-hidden', false)
         }
       }
     }
