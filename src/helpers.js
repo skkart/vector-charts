@@ -252,4 +252,38 @@ export function addDefaultBSOptions (opts) {
   return opts
 }
 
+export function addDefaultPSOptions (opts) {
 
+  // General Options to both chartType
+  opts.tooltip = Object.assign({
+    visible: true,
+    format: false // Use aryakaCharts internal tooltip formatter to show raw data
+  }, (opts.tooltip || {}))
+
+  if (!isFunction(opts.tooltip.format)) {
+    opts.tooltip.format = function (d) {
+      if (!d || !d.value) {
+        return ''
+      }
+      const pieObj = this.options.series.pie
+      const format = pieObj.format || defaultValueFormat
+      const percentage = getValueWithDecimals((d.value / pieObj.total) * 100, 1)
+
+      return `<table style='opacity: 0.8;'>
+              <tbody>
+              <tr>
+              <td class='name'><span style='background-color:${d.color}'></span>${d.name}</td>
+              <td class='value'>${percentage} %</td>
+              </tr>
+              <tr>
+              <td class='value' colspan='2'>${format(d.value, pieObj.unit)}</td>
+              </tr>
+              </tbody>
+              </table>`
+    }
+  }
+
+  addDefaultChartOptions(opts)
+
+  return opts
+}

@@ -8,7 +8,9 @@ export default async function chartFactory (container, opts) {
       const TimeSeriesChart = Chart.default
       return new TimeSeriesChart(container, opts)
     } else if (getObject(opts, 'chart.chartType') === constants.PIE_SERIES_CHART_TYPE) {
-      // return new ac.pieSeriesChart(container, opts)
+      const Chart = await import(/* webpackChunkName: "pieseries"  */ '@/charts/PieSeriesChart')
+      const PieSeriesChart = Chart.default
+      return new PieSeriesChart(container, opts)
     } else if (getObject(opts, 'chart.chartType') === constants.BAR_SERIES_CHART_TYPE) {
       const Chart = await import(/* webpackChunkName: "barseries"  */ '@/charts/BarSeriesChart')
       const BarSeriesChart = Chart.default

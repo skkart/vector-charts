@@ -13,6 +13,8 @@ export {
 
 export {timeFormat} from 'd3-time-format'
 
+export {interpolate} from 'd3-interpolate'
+
 export {
   select,
   mouse as d3Mouse,
@@ -30,7 +32,8 @@ export {brushX, brushY} from 'd3-brush'
 
 export {
   line, stack, area,
-  stackOrderNone, stackOffsetNone
+  stackOrderNone, stackOffsetNone,
+  pie, arc
 } from 'd3-shape'
 
 export default {
