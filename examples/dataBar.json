@@ -1,38 +1,36 @@
 {
-  "ResJSON":{
-    "barseries":{
-      "columns":[
-        "Names",
-        "Count",
-        "Count 2"
+  "barseries":{
+    "columns":[
+      "Names",
+      "Count",
+      "Count 2"
+    ],
+    "values":[
+      [
+        "Series A",
+        250,
+        350
       ],
-      "values":[
-        [
-          "Series A",
-          250,
-          350
-        ],
-        [
-          "Series B",
-          150,
-          250
-        ],
-        [
-          "Series C",
-          357,
-          450
-        ],
-        [
-          "Series D",
-          410,
-          250
-        ],
-        [
-          "Series E",
-          250,
-          350
-        ]
+      [
+        "Series B",
+        150,
+        250
+      ],
+      [
+        "Series C",
+        357,
+        450
+      ],
+      [
+        "Series D",
+        410,
+        250
+      ],
+      [
+        "Series E",
+        250,
+        350
       ]
-    }
+    ]
   }
 }

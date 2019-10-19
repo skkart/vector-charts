@@ -39,7 +39,7 @@
             chartResize: true,
             chartType: "pieseries"
           },
-          data: jdata.ResJSON,
+          data: jdata,
           series: {
             pie: {
               name: 'PieChart', // Name taken from timeseries.columns
@@ -50,21 +50,7 @@
         };
 
         var opts2 = {
-          chart: {
-            heading: "Pieseries",
-            chartIndex: 2,
-            //width: 800,
-            height: 270,
-            margin: {
-              top: 40,
-              right: 15,
-              bottom: 50,
-              left: 15
-            },
-            chartResize: true,
-            chartType: "pieseries"
-          },
-          data: jdata.ResJSON,
+          ...opts,
           series: {
             pie: {
               name: 'PieChart', // Name taken from timeseries.columns

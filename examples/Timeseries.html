@@ -14,7 +14,7 @@
 </svg></div>
 <br/><br/>
 <br/><br/>
-<div id="container3" style="width: 70%;position: absolute;" ><svg>
+<div id="container3" style="width: 70%;position: relative;" ><svg>
 
 </svg></div>
 <br/><br/>
@@ -41,7 +41,7 @@
             chartResize: true,
             chartType: "timeseries"
           },
-          data: jdata.ResJSON,
+          data: jdata,
           xAxis: {
             bottom: {
             }
@@ -103,7 +103,7 @@
             chartResize: true,
             chartType: "timeseries"
           },
-          data: jdata.ResJSON,
+          data: jdata,
           xAxis: {
             bottom: {
               label: 'Time'
@@ -151,7 +151,7 @@
         console.log(jdata)
         var opts = {
           chart: {
-            heading: "Timeseries",
+            heading: "Barseries",
             chartIndex: 2,
             //width: 800,
             height: 270,
@@ -164,7 +164,7 @@
             chartResize: true,
             chartType: "barseries"
           },
-          data: jdata.ResJSON,
+          data: jdata,
           xAxis: {
             bottom: {
               rotateText: "slant",
@@ -223,8 +223,8 @@
           return response.json()
         })
         .then((jdata) => {
-          // drawLineChart(jdata)
-          // drawStackChart(jdata)
+          drawLineChart(jdata)
+          drawStackChart(jdata)
         })
 
       fetch('dataBar.json')
