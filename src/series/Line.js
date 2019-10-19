@@ -56,7 +56,7 @@ export default class Line extends ChartComponent {
       .append('g')
       .attr('class', 'vc-line-plot vc-line-' + this.opts.className)
 
-    const clipElement = this.opts.chart.$container.find('svg clipPath')
+    const clipElement = this.opts.chart.container.select('svg clipPath')
     // Adding the lines series for data to be shown
     this.lineTag.append('path')
       .attr('clip-path', 'url(#' + clipElement.attr('id') + ')') // display graphZone of same size as clip-path defined

@@ -1,6 +1,7 @@
 import ChartComponent from '@/charts/ChartComponent'
 import constants from '@/constants'
 import {pie, arc, interpolate, select} from '@/d3Importer'
+import {elementOffset} from '@/utils'
 
 export default class Pie extends ChartComponent {
   constructor (opts) {
@@ -72,9 +73,10 @@ export default class Pie extends ChartComponent {
       })
       .style('opacity', constants.PIE_DARK_OPACITY)
       .style('stroke-width', 0)
-      .on('mouseover', function (d) {
+      .on('mouseover', function (d, ind) {
         // tooltip feature
-        const textPos = $(this).parent().find('text').offset() // Find position of Arc respective tooltipHelper
+        const txtEle = self.arcZone.select(`.vc-tool-text_${ind}`)
+        const textPos = elementOffset(txtEle) // Find position of Arc respective tooltipHelper
         self.opts.chart.tooltip && self.opts.chart.tooltip.hover(textPos.left, textPos.top, d)
         // Dull all other Arcs
         self.arcZone.selectAll('path')
@@ -110,6 +112,9 @@ export default class Pie extends ChartComponent {
 
     // Add tooltip-helper for each arc outside pie area
     this.arcZone.append('text')
+      .attr('class', function (d, ind) {
+        return `vc-tool-text_${ind}`
+      })
       .attr('transform', function (d) {
         return 'translate(' + self.opts.tooltipHelper.centroid(d) + ')'
       })

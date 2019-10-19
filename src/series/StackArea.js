@@ -71,7 +71,7 @@ export default class StackArea extends ChartComponent {
       .append('g')
       .attr('class', 'vc-stack-plot vc-stack-' + this.opts.className)
 
-    const clipElement = this.opts.chart.$container.find('svg clipPath')
+    const clipElement = this.opts.chart.container.select('svg clipPath')
 
     // PLot stackLayer based on each series visiblity
     this.stackLayer.append('path')
