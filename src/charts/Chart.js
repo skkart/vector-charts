@@ -1,4 +1,4 @@
-import {isObject, isString, throttle} from '@/utils'
+import {elementOffset, isObject, isString, throttle} from '@/utils'
 import uniqueId from 'lodash/uniqueId'
 import {select} from '@/d3Importer'
 import ChartComponent from '@/charts/ChartComponent'
@@ -7,20 +7,23 @@ export default class Chart extends ChartComponent {
   constructor (container, opts) {
     super()
     if (isString(container) && isObject(opts) && container.length && isObject(opts.dataParser)) {
-      this.$container = $(container)
-      if (!this.$container.length) {
+      this.container = select(container)
+      if (!this.container.size()) {
         throw new Error('The graph container spectifed in options doesnt exist inside in Document Body')
       }
       opts.containerName = container
+
+      const containerBox = elementOffset(this.container)
+
       let takeContainerWidth = false
       if (!Number.isFinite(opts.chart.width)) {
-        opts.chart.width = this.$container.width()
+        opts.chart.width = containerBox.width
         takeContainerWidth = true
       }
 
       let takeContainerHeight = false
       if (!Number.isFinite(opts.chart.height)) {
-        opts.chart.height = this.$container.height()
+        opts.chart.height = containerBox.height
         takeContainerHeight = true
       }
 
@@ -62,15 +65,15 @@ export default class Chart extends ChartComponent {
       // Array which holds all the chartComponents required for the graph like axis, series, tooltip, legend etc
       this.chartComponentsArr = []
 
-      this.svg = select(this.$container.get(0)).select('svg')
+      this.svg = this.container.select('svg')
 
       if (this.svg.size() === 0) {
         // Create svg element if not exist inside chart container DIV
-        this.svg = select(this.$container.get(0)).select('.vc-div-svg').append('svg')
+        this.svg = this.container.append('svg')
       }
 
       // Clear svg if it has needless content
-      $(this.svg.node()).empty()
+      this.svg.html('')
 
       this.svg
         .attr('width', this.chartFullSpace.width)
@@ -127,7 +130,7 @@ export default class Chart extends ChartComponent {
   }
 
   remove () {
-    console.log('ac.chart remove', this)
+    console.log('Chart remove', this)
     this.chartComponentsArr.forEach(function (chartCmpt) {
       if (chartCmpt instanceof ChartComponent) {
         chartCmpt.remove()
@@ -150,14 +153,15 @@ export default class Chart extends ChartComponent {
       }, 450) // 'this' Will have reference of timeSeriesChart or pieSeriesChart
 
       // Add resize for each chart based on chart ID namespace
-      const chartId = 'ac_' + this.options.chart.id
-      $(window).on('resize.' + chartId, () => this.autoSizeChart())
+      const chartId = 'vc-' + (this.options.chart.id || this.options.chart.counter)
+      select(window).on('resize.' + chartId, () => this.autoSizeChart())
 
     }
   }
 
   autoSizeChart () {
-    let resizedGraphWidth = this.$container.width()
+    const containerBox = elementOffset(this.container)
+    let resizedGraphWidth = containerBox.width
 
     if (resizedGraphWidth > this.options.chart.maxWidth) {
       resizedGraphWidth = this.options.chart.maxWidth
@@ -167,7 +171,7 @@ export default class Chart extends ChartComponent {
       resizedGraphWidth = this.options.chart.minWidth
     }
 
-    this.throttedResize(resizedGraphWidth, this.$container.height())
+    this.throttedResize(resizedGraphWidth, containerBox.height)
   }
 
   // Destroy all chart properties and components
@@ -175,8 +179,8 @@ export default class Chart extends ChartComponent {
     destroyFull = !!destroyFull
     // Remove resize hander on window for vcChart namespace
     if (this.options.chart.chartResize) {
-      const chartId = 'ac_' + this.options.chart.id
-      $(window).off('resize.' + chartId)
+      const chartId = 'vc-' + (this.options.chart.id || this.options.chart.counter)
+      select(window).on('resize.' + chartId, null)
     }
 
     // Remove all chartComponents (timeSeriesChart or pieSeriesChart)
@@ -184,7 +188,7 @@ export default class Chart extends ChartComponent {
 
     // Remove svg and container if destroyFull is true
     destroyFull && this.svg.remove()
-    destroyFull && this.$container.remove()
+    destroyFull && this.container.remove()
 
     return null
   }
