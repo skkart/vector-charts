@@ -1,6 +1,5 @@
 import ChartAxisParser from '@/data-parser/ChartAxisParser'
 import {getObject, refineString, isBoolean} from '@/utils'
-import {map, each} from 'lodash'
 
 export default class BasicBSParser extends ChartAxisParser {
   constructor (opts) {
@@ -55,7 +54,7 @@ export default class BasicBSParser extends ChartAxisParser {
     return {
       timeInfo: {
         dataIndex,
-        timeRange: map(seriesData, 0)
+        timeRange: seriesData.map((dt) => dt[0])
       }
     }
   }
@@ -97,16 +96,17 @@ export default class BasicBSParser extends ChartAxisParser {
       if (findEachPlotRange) {
 
         // Reset range for each plot for finding min , max
-        each(eachPlotSet, function (eachPlot) {
+        for (const plot in eachPlotSet) {
+          const eachPlot = eachPlotSet[plot]
           eachPlot.minVal = Infinity
           eachPlot.maxVal = -Infinity
-        })
-
+        }
 
         // Calculate Max and Min for each plots series
         let valData = 0
         data.forEach(function (d) {
-          each(eachPlotSet, function (eachPlot) {
+          for (const plot in eachPlotSet) {
+            const eachPlot = eachPlotSet[plot]
             valData = d[eachPlot.dataIndex]
             if (valData < eachPlot.minVal) {
               eachPlot.minVal = valData
@@ -114,7 +114,7 @@ export default class BasicBSParser extends ChartAxisParser {
             if (valData > eachPlot.maxVal) {
               eachPlot.maxVal = valData
             }
-          })
+          }
         })
       }
 

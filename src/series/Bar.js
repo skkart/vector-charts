@@ -1,7 +1,6 @@
 import ChartComponent from '@/charts/ChartComponent'
 import constants from '@/constants'
 import {getObject} from '@/utils'
-import {each, map} from 'lodash'
 import {stack, range, transpose, max, select, d3Event} from '@/d3Importer'
 
 export default class Bar extends ChartComponent {
@@ -46,10 +45,20 @@ export default class Bar extends ChartComponent {
 
     const srData = this.opts.barData
     this.opts.seriesArr = []
-    this.opts.xAxisArr = map(srData, this.opts.xAxisTarget)
-    each(this.opts.barOrderIndex, function (indexVal) {
-      self.opts.seriesArr.push(map(srData, indexVal))
+    this.opts.xAxisArr = []
+    srData.forEach((sData, ind) => {
+      this.opts.xAxisArr.push(sData[this.opts.xAxisTarget])
+      this.opts.barOrderIndex.forEach(function (indexVal, brInd) {
+        if (!self.opts.seriesArr[brInd]) {
+          self.opts.seriesArr[brInd] = []
+        }
+        const eachSeriesData = self.opts.seriesArr[brInd]
+        eachSeriesData.push(sData[indexVal])
+      })
     })
+    // this.opts.barOrderIndex.forEach(function (indexVal) {
+    //   self.opts.seriesArr.push(map(srData, indexVal))
+    // })
 
     this.opts.barStack = stack().keys(range(this.opts.seriesLength))(transpose(this.opts.seriesArr))
 
@@ -70,7 +79,7 @@ export default class Bar extends ChartComponent {
     const barVisibleOrder = this.opts.barOrderMembers.filter(function (ele) {
       return (eachPlotSet[ele.name].visible || false)
     })
-    each(barVisibleOrder, function (plot, name) {
+    barVisibleOrder.forEach(function (plot, name) {
       const pt = eachPlotSet[plot.name]
       nameIndexMap[pt.dataIndex - 1] = plot.name
     })
@@ -121,12 +130,12 @@ export default class Bar extends ChartComponent {
         self.opts.chart.tooltip && self.opts.chart.tooltip.hide()
       })
 
-
-    each(this.opts.events, function (fn, name) {
+    for (const name in this.opts.events) {
+      const fn = this.opts.events[name]
       self.bars.on(name, function () {
         fn.apply(self.opts.chart, arguments)
       })
-    })
+    }
 
   }
 

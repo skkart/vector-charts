@@ -1,7 +1,6 @@
 import ChartComponent from '@/charts/ChartComponent'
 import {elementOffset, getObject, isFunction} from '@/utils'
 import {bisector, d3Mouse} from '@/d3Importer'
-import {each, filter} from 'lodash'
 import constants from '@/constants'
 
 export default class TimeSeriesTooltip extends ChartComponent {
@@ -78,17 +77,18 @@ export default class TimeSeriesTooltip extends ChartComponent {
 
           const visibleDataIndex = {}
 
-          each(self.opts.chart.options.plotSet, function (plot) {
+          for (const pl in self.opts.chart.options.plotSet) {
+            const plot = self.opts.chart.options.plotSet[pl]
             if (plot.visible) {
               visibleDataIndex[plot.dataIndex] = true
             }
-          })
+          }
 
           const multiArrMap = {}
           // Do Scan from range -dataParseLen to +dataParseLen between found data index
           for (let ind = (found - dataParseLen); ind < (found + dataParseLen); ind++) {
             if (dataSet[ind]) {
-              const dSet = filter(dataSet[ind], function (val, index) {
+              const dSet = dataSet[ind].filter(function (val, index) {
                 return visibleDataIndex[index]
               }).sort(function (a, b) {
                 return b - a
@@ -100,12 +100,13 @@ export default class TimeSeriesTooltip extends ChartComponent {
           }
           let maxInd
           let maxVal = -Infinity
-          each(multiArrMap, function (arrSet, key) {
+          for (const mp in multiArrMap) {
+            const arrSet = multiArrMap[mp]
             if (maxVal < arrSet[0]) {
               maxVal = arrSet[0]
-              maxInd = key
+              maxInd = mp
             }
-          })
+          }
 
           toolTipData = dataSet[maxInd] || dFound
         } else {

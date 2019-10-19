@@ -1,5 +1,4 @@
 import {elementOffset, isObject, isString, throttle} from '@/utils'
-import uniqueId from 'lodash/uniqueId'
 import {select} from '@/d3Importer'
 import ChartComponent from '@/charts/ChartComponent'
 
@@ -83,7 +82,7 @@ export default class Chart extends ChartComponent {
       // Add defs to show plot series within the def specified width and height
       this.svg.append('defs')
         .append('clipPath')
-        .attr('id', uniqueId('chart_clip'))
+        .attr('id', `chart_clip_${this.options.chart.counter}`)
         .append('rect')
         .attr('width', this.chartWidth)
         .attr('height', this.chartHeight)
