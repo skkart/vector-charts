@@ -1,8 +1,9 @@
 {
   "name": "vector-charts",
   "version": "1.0.0",
-  "description": "An JS charting library for Web Application, built on top of d3.js V5",
-  "main": "dist/vector-charts.min.js",
+  "description": "A light-weigth reusable charting library based on D3.js V5",
+  "main": "dist/vector-charts-lazy.min.js",
+  "style": "dist/vector-charts.css",
   "repository": "https://github.com/skkart/vector-charts.git",
   "author": "skkart <skkarthik10@gmail.com>",
   "license": "MIT",
