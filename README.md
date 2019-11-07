@@ -24,7 +24,7 @@
 * Install with yarn:``` yarn add vector-charts```
 * Clone the repo: git clone https://github.com/skkart/vector-charts.git
 
-The released bundle supports anonymous AMD, CommonJS, and vanilla environments. 
+The released bundle supports anonymous AMD, CommonJS, and vanilla environments. \
 For example:
 Simply add the vector-charts assets to your project and include them in your HTML.\
 ```
@@ -44,22 +44,26 @@ import * as vc from "vector-charts"; // Import everything into a namespace (here
 ```
 
 ## Dependencies
-vector-charts uses d3.js V5 and later versions. \
-Please check package.json for the various d3 packages imported by vector-charts.
+Only few modules of d3.js which are used in vertor-charts have been imported. Not the full d3 library. \
+Please check package.json for the various d3 packages imported by vector-charts.\
+Requires **D3.js ^5.0.0** - Greater than V5 version.\
+
+
+## How to build
+Clone the repo: git clone https://github.com/skkart/vector-charts.git\
+Run ```yarn install``` -- Download all project dependencies.\
+Run ```yarn build``` -- Production mode, the compiled code will be in the dist folder.\
+Run ```yarn dev``` -- Development mode\
+Run ```yarn start``` -- Start server on example folder to check the chart samples (open Usage.html for chart links)
 
 
 ## Supported Browsers
-Recommended that you upgrade to the latest version of one of the below-listed browsers
+Recommended that you upgrade to the latest version of one of the below-listed browsers\
 - Google Chrome
 - Opera
 - Safari
 - Firefox
 - Microsoft Edge
 
-## How to build
-Clone the repo.\
-Run ```yarn install``` -- Download all project dependencies.\
-Run ```yarn build``` -- Production mode, the compiled code will be in the dist folder.\
-Run ```yarn dev``` -- Development mode\
-Run ```yarn start``` -- Start server on example folder to check the chart samples (timeseries.html, Pieseries.html, Barseries.html)
+
 
