@@ -1,4 +1,4 @@
-import plotChart from '@/chartFactoryLazy'
+import plotChart from '@/chartFactory'
 import ChartDataParer from '@/data-parser/ChartDataParser'
 import ChartAxisParer from '@/data-parser/ChartAxisParser'
 import ChartComponent from '@/charts/ChartComponent'
