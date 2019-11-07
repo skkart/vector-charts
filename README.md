@@ -3,19 +3,19 @@
 
 
 **Timeseries Charts**
-* Line Chart
-* Area Chart
-* Line + Area Chart
-* Stacked Area Chart
-* Line + Stacked Area Chart
+* Line Chart - [Demo](https://jsfiddle.net/46jtemnd/2/)
+* Area Chart - [Demo](https://jsfiddle.net/46jtemnd/3/)
+* Line + Area Chart - [Demo](https://jsfiddle.net/38q9n1vx/)
+* Stacked Area Chart - [Demo](https://jsfiddle.net/46jtemnd/4/)
+* Line + Stacked Area Chart - [Demo](https://jsfiddle.net/1scrhgb8/)
 
 **Pieseries Charts**
-* Pie Chart
-* Donut Chart
+* Pie Chart - [Demo](https://jsfiddle.net/46jtemnd/5/)
+* Donut Chart - [Demo](https://jsfiddle.net/46jtemnd/6/)
 
 **Barseries Charts**
-* Bar Chart
-* Multi series Bar Chart
+* Bar Chart - [Demo](https://jsfiddle.net/46jtemnd/8/)
+* Multi series Bar Chart - [Demo](https://jsfiddle.net/46jtemnd/7/)
 
 
 
