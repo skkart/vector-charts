@@ -1,13 +1,19 @@
 const path = require('path')
 const SRC_DIR = path.resolve(__dirname, './src/')
+const DIST_DIR = path.resolve(__dirname, './dist/')
+const EX_DIR = path.resolve(__dirname, './examples/')
+const CopyPlugin = require('copy-webpack-plugin')
+
+
 var config = {
   mode: 'production',
   context: SRC_DIR, // `__dirname` is root of project and `/src` is source
   entry: {
     'vector-charts': path.resolve(SRC_DIR, 'index.js'),
+    'vector-charts-lazy': path.resolve(SRC_DIR, 'indexLazy.js'),
   },
   output: {
-    path: path.resolve(__dirname, 'dist'), // `/dist` is the destination
+    path: DIST_DIR, // `/dist` is the destination
     filename: '[name].min.js',
     library: 'vc',
     libraryTarget: 'umd',
@@ -24,6 +30,12 @@ var config = {
       }
     ]
   },
+  plugins: [
+    new CopyPlugin([
+      { from: path.resolve(SRC_DIR, 'vector-charts.css'), to: DIST_DIR },
+      { from: DIST_DIR, to: EX_DIR}
+    ]),
+  ],
   resolve: {
     extensions: ['.js'],
     alias: {

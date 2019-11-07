@@ -14,9 +14,7 @@
     "babel": "babel src --out-dir dist/compiled --source-maps",
     "start": "http-server ./examples/ -p 9088",
     "build": "webpack",
-    "dev": "webpack --config webpack.dev.js",
-    "postdev": "cp -Rf dist/* examples/",
-    "postbuild": "cp -Rf dist/* examples/"
+    "dev": "webpack --config webpack.dev.js"
   },
   "dependencies": {
     "d3-array": "^2.3.1",
@@ -38,6 +36,7 @@
     "babel-preset-minify": "^0.4.3",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
+    "copy-webpack-plugin": "^5.0.5",
     "eslint": "5.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-import-resolver-webpack": "^0.11.1",

@@ -1,4 +1,4 @@
-import config from './webpack.config'
+const config = require('./webpack.config')
 const path = require('path')
 
 module.exports = {
@@ -14,3 +14,4 @@ module.exports = {
     libraryExport: 'default'
   }
 }
+
