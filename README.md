@@ -1,5 +1,5 @@
 # vector-charts
-***A light-weight D3-based reusable chart library.***
+***A light-weigth reusable charting library based on D3.js v5.***
 
 
 **Timeseries Charts**
@@ -24,46 +24,55 @@
 * Install with yarn:``` yarn add vector-charts```
 * Clone the repo: git clone https://github.com/skkart/vector-charts.git
 
-The released bundle supports anonymous AMD, CommonJS, and vanilla environments. \
-For example:
-Simply add the vector-charts assets to your project and include them in your HTML.\
+Vector-charts is written in ES6, uses yarn package manager and built with webpack. \
+The released bundle supports AMD, CommonJS, and vanilla environments. \
+Usage example:
+* Simply add the vector-charts assets to your project and include them in your HTML.
 ```
+# Include CSS for Vector-charts
 <link rel="stylesheet" type="text/css" href="vector-charts.css">
-<script src="vector-charts.js"></script>
 
+# Include Vector-charts - whole bundle, imports all Charts by default
+<script src="vector-charts.min.js"></script>  
+          
+ # Include Vector-charts on demand - lazy bundle, imports required Charts based on demand and usage         
+<script src="vector-charts-lazy.min.js"></script>
+
+``` 
+* You can create a custom bundle using webpack or your preferred bundler and import the vector-charts \
+in your application as shown below:
 ```
-Note: Prefer minified assets (.min) for production.
-
-D3 is written using ES2015 modules. Create a custom bundle using Rollup, Webpack, or your preferred bundler. \
-To import D3 into an ES2015 application, either import specific symbols from specific D3 modules:\
-```
-import {plotChart} from "vector-charts"; // To import specific module
-
 import * as vc from "vector-charts"; // Import everything into a namespace (here, vc):
+
+import {plotChart} from "vector-charts"; // To import specific module
 
 ```
 
 ## Dependencies
-Only few modules of d3.js which are used in vertor-charts have been imported. Not the full d3 library. \
-Please check package.json for the various d3 packages imported by vector-charts.\
-Requires **D3.js ^5.0.0** - Greater than V5 version.\
+Imports only few modules of D3.js in vector-charts and not the entrie D3.js modules. \
+Please check package.json for the various d3 packages dependencies imported.\
+Requires **D3.js ^5.0.0** - Greater than V5 version.
 
 
 ## How to build
-Clone the repo: git clone https://github.com/skkart/vector-charts.git\
-Run ```yarn install``` -- Download all project dependencies.\
-Run ```yarn build``` -- Production mode, the compiled code will be in the dist folder.\
-Run ```yarn dev``` -- Development mode\
-Run ```yarn start``` -- Start server on example folder to check the chart samples (open Usage.html for chart links)
+* Clone the repo: git clone https://github.com/skkart/vector-charts.git or ```npm install vector-charts```
+* Run ```yarn install``` -- Download all project dependencies.
+* Run ```yarn build``` -- Production mode, the compiled code will be in the dist folder.
+* Run ```yarn start``` -- Start server on example folder to check the chart samples (open Usage.html for chart links)
 
 
 ## Supported Browsers
-Recommended that you upgrade to the latest version of one of the below-listed browsers\
+Recommended that you upgrade to the latest version of one of the below-listed browsers
 - Google Chrome
 - Opera
 - Safari
 - Firefox
 - Microsoft Edge
 
+
+## License
+[MIT](LICENSE)
+
+Copyright (c) 2019 Karthik S
 
 
