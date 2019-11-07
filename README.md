@@ -58,8 +58,8 @@ Recommended that you upgrade to the latest version of one of the below-listed br
 
 ## How to build
 Clone the repo.\
-Run yarn install -- Download all project dependencies.\
-Run yarn build -- Production mode, the compiled code will be in the dist folder.\
-Run yarn dev -- Development mode\
-Run yarn start -- Start server on example folder to check the chart samples (timeseries.html, Pieseries.html, Barseries.html)
+Run ```yarn install``` -- Download all project dependencies.\
+Run ```yarn build``` -- Production mode, the compiled code will be in the dist folder.\
+Run ```yarn dev``` -- Development mode\
+Run ```yarn start``` -- Start server on example folder to check the chart samples (timeseries.html, Pieseries.html, Barseries.html)
 
