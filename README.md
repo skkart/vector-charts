@@ -1,20 +1,19 @@
 # vector-charts
-A light-weight D3-based reusable chart library.
+***A light-weight D3-based reusable chart library.***
 
-**Supported charts types are listed as below:**
 
-**Timeseries type (X axis as time, Y axis as data)**
-* Line Chart - 
-* Area Chart - Timeseries type
-* Line + Area Chart - Timeseries type
-* Stacked Area Chart - Timeseries type
-* Line + Stacked Area Chart - Timeseries type
+**Timeseries Charts**
+* Line Chart
+* Area Chart
+* Line + Area Chart
+* Stacked Area Chart
+* Line + Stacked Area Chart
 
-**Pieseries types**
+**Pieseries Charts**
 * Pie Chart
 * Donut Chart
 
-**Barseries types**
+**Barseries Charts**
 * Bar Chart
 * Multi series Bar Chart
 
