@@ -26,7 +26,7 @@
 
 The released bundle supports anonymous AMD, CommonJS, and vanilla environments. 
 For example:
-Simply add the vector-charts assets to your project and include them in your HTML.
+Simply add the vector-charts assets to your project and include them in your HTML.\
 ```
 <link rel="stylesheet" type="text/css" href="vector-charts.css">
 <script src="vector-charts.js"></script>
@@ -34,8 +34,8 @@ Simply add the vector-charts assets to your project and include them in your HTM
 ```
 Note: Prefer minified assets (.min) for production.
 
-D3 is written using ES2015 modules. Create a custom bundle using Rollup, Webpack, or your preferred bundler. 
-To import D3 into an ES2015 application, either import specific symbols from specific D3 modules:
+D3 is written using ES2015 modules. Create a custom bundle using Rollup, Webpack, or your preferred bundler. \
+To import D3 into an ES2015 application, either import specific symbols from specific D3 modules:\
 ```
 import {plotChart} from "vector-charts"; // To import specific module
 
@@ -44,7 +44,7 @@ import * as vc from "vector-charts"; // Import everything into a namespace (here
 ```
 
 ## Dependencies
-vector-charts uses d3.js V5 and later versions. 
+vector-charts uses d3.js V5 and later versions. \
 Please check package.json for the various d3 packages imported by vector-charts.
 
 
@@ -55,4 +55,11 @@ Recommended that you upgrade to the latest version of one of the below-listed br
 - Safari
 - Firefox
 - Microsoft Edge
+
+## How to build
+Clone the repo.\
+Run yarn install -- Download all project dependencies.\
+Run yarn build -- Production mode, the compiled code will be in the dist folder.\
+Run yarn dev -- Development mode\
+Run yarn start -- Start server on example folder to check the chart samples (timeseries.html, Pieseries.html, Barseries.html)
 
