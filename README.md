@@ -1,5 +1,6 @@
 # vector-charts
-***A light-weigth reusable charting library based on D3.js v5.***
+***A light-weigth reusable charting library based on D3.js v5. ***
+
 
 
 **Timeseries Charts**
