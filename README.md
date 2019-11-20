@@ -1,5 +1,5 @@
 # vector-charts
-***A light-weigth reusable charting library based on D3.js v5. ***
+***A light-weigth reusable charting library based on D3.js v5.***
 
 
 
@@ -21,10 +21,6 @@
 
 
 ## Quick Start
-* Install with npm:``` npm install vector-charts```
-* Install with yarn:``` yarn add vector-charts```
-* Clone the repo: git clone https://github.com/skkart/vector-charts.git
-
 Vector-charts is written in ES6, uses yarn package manager and built with webpack. \
 The released bundle supports AMD, CommonJS, and vanilla environments. \
 Usage example:
@@ -56,7 +52,6 @@ Requires **D3.js ^5.0.0** - Greater than V5 version.
 
 
 ## How to build
-* Clone the repo: git clone https://github.com/skkart/vector-charts.git or ```npm install vector-charts```
 * Run ```yarn install``` -- Download all project dependencies.
 * Run ```yarn build``` -- Production mode, the compiled code will be in the dist folder.
 * Run ```yarn start``` -- Start server on example folder to check the chart samples (open Usage.html for chart links)
