@@ -21,26 +21,25 @@ export default class MouseHandler extends ChartComponent {
       this.mouseBrush.attr('cursor', 'pointer')
     }
 
-    if (!this.opts.chart.options.zoom.visible) {
-      // x-Zoom for chart doest not exist, Add rect overlay for brushXDiv
-      this.mouseBrush.append('rect')
-        .attr('class', 'overlay')
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', this.opts.chart.chartWidth)
-        .attr('height', this.opts.chart.chartHeight)
-    }
+    // if (!this.opts.chart.options.zoom.visible) {
+    //
+    // }
+    // x-Zoom for chart doest not exist, Add rect overlay for brushXDiv
+    this.mouseBrush.append('rect')
+      .attr('class', 'overlay')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', this.opts.chart.chartWidth)
+      .attr('height', this.opts.chart.chartHeight)
   }
 
   update () {
     this.mouseBrush.attr('width', this.opts.chart.chartWidth)
       .attr('height', this.opts.chart.chartHeight)
       .attr('transform', `translate(${this.opts.chart.margin.left},${this.opts.chart.margin.top})`)
-    if (!this.opts.chart.options.zoom.visible) {
-      this.mouseBrush.select('rect.overlay')
-        .attr('width', this.opts.chart.chartWidth)
-        .attr('height', this.opts.chart.chartHeight)
-    }
+    this.mouseBrush.select('rect.overlay')
+      .attr('width', this.opts.chart.chartWidth)
+      .attr('height', this.opts.chart.chartHeight)
   }
 
   showHide (showFlag) {

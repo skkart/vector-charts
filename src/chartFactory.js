@@ -18,7 +18,7 @@ export default function chartFactory (container, opts) {
     }
   } catch (e) {
     console.log('Error encountered while Chart initilization', e)
-    this.opts.onError(e)
+    opts.onError && opts.onError(e)
     throw new Error('Invalid JSON received - Error on timeseries JSON parsing')
   }
 }

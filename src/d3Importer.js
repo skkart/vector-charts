@@ -1,3 +1,5 @@
+// import * as zoom from 'd3-zoom'
+
 export {
   scaleBand,
   scaleLinear,
@@ -19,7 +21,9 @@ export {
   select,
   selectAll,
   mouse as d3Mouse,
-  event as d3Event
+  event as d3Event,
+  touch as d3Touch,
+  touches as d3Touches
 } from 'd3-selection'
 
 export {
@@ -37,6 +41,8 @@ export {
   pie, arc
 } from 'd3-shape'
 
+export {zoom, zoomTransform} from 'd3-zoom'
+
 export default {
-  version: 'v5'
+  version: 'v5',
 }

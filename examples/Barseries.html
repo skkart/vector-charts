@@ -49,6 +49,9 @@
           left: {
             unit: 'Count',
             tickNumber: 5,
+            tickFormatter (val) {
+              return val + ' KK'
+            }
           }
         },
         zoom: {
@@ -65,6 +68,7 @@
             }],
             name: "Bar_Chart",
             plotAxis: ["left", "bottom"],
+
             events: {
               click: function (dtArr, dtPos) {
                 console.log(dtArr, dtPos)

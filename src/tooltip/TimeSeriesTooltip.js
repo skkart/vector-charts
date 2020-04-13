@@ -131,7 +131,7 @@ export default class TimeSeriesTooltip extends ChartComponent {
 
       let eventName = 'mousemove'
       if (this.opts.chart.options.chart.isTouchScreen) {
-        eventName = 'click'
+        eventName = 'dblclick'
       }
       mouseHandler.mouseBrush
         .on(eventName, mouseEvt)

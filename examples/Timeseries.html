@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <link rel="shortcut icon" href="#">
 <body>
 <h1 style="padding-bottom:10px;"> </h1>
-<br/><br/>
-<div id="container" style="width: 70%;" ><svg>
+<div style="height: 250px">Content 2</div>
+<br/>
+<div style="height: 250px">Content 2</div>
+<br/>
+<div style="height: 250px">Content 2</div>
+<br/>
+<div id="container" style="width: 90%;" ><svg>
 
 </svg></div>
-<br/><br/>
-<br/><br/>
-<div id="container2" style="width: 70%;" ><svg>
+<br/>
+<div style="height: 250px">Content 2</div>
+<br/>
+<br/>
+<div style="height: 250px">Content 2</div>
+<br/>
+<div id="container2" style="width: 90%;" ><svg>
 
 </svg></div>
 <br/><br/>
@@ -35,7 +45,8 @@
               left: 15
             },
             chartResize: true,
-            chartType: "timeseries"
+            chartType: "timeseries",
+            isTouchScreen: !!(navigator.maxTouchPoints || ("ontouchstart" in window))
           },
           data: jdata,
           xAxis: {
@@ -102,7 +113,8 @@
           data: jdata,
           xAxis: {
             bottom: {
-              label: 'Time'
+              label: 'Time',
+              tickNumber: 4
             }
           },
           yAxis: {
@@ -151,16 +163,16 @@
         }
       }
 
-      fetch('dataTimeSeries.json')
+      fetch('dataTimeSeries2.json')
         .then(status)
         .then((response) => {
           return response.json()
         })
         .then((jdata) => {
           drawLineChart(jdata)
-          drawStackChart(jdata)
+          // drawStackChart(jdata)
         })
 
     }
 </script>
-<script src="vector-charts-lazy.min.js"></script>
+<script src="vector-charts-lazy.js"></script>

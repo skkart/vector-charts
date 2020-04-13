@@ -74,10 +74,15 @@ export default class Chart extends ChartComponent {
       // Clear svg if it has needless content
       this.svg.html('')
 
+      let svgClass = 'vc-svg ' + opts.chart.className
+      if (this.options.chart.isTouchScreen) {
+        svgClass += ' vc-noselect'
+      }
       this.svg
         .attr('width', this.chartFullSpace.width)
         .attr('height', this.chartFullSpace.height)
-        .attr('class', 'vc-svg ' + opts.chart.className)
+        .attr('class', svgClass)
+
 
       // Add defs to show plot series within the def specified width and height
       this.svg.append('defs')

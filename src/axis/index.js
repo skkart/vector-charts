@@ -54,6 +54,7 @@ export default class Axis extends ChartComponent {
 
     // Holds all tick values that axis shows
     this.tickValues = []
+    const self = this
 
     if (this.opts.position === 'y') {
       if (this.opts.orient === constants.DIR_LEFT) {
