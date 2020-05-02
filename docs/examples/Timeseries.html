@@ -15,6 +15,72 @@
 
 </svg></div>
 <br/><br/>
+
+<div class="language-plaintext highlighter-rouge">
+    Usage:
+    <div class="highlight"><pre class="highlight"><code>
+var opts = {
+          chart: {
+            heading: "Timeseries",
+            chartIndex: 2,
+            //width: 800,
+            height: 270,
+            margin: {
+              top: 40,
+              right: 15,
+              bottom: 50,
+              left: 15
+            },
+            chartResize: true,
+            chartType: "timeseries",
+            isTouchScreen: !!(navigator.maxTouchPoints || ("ontouchstart" in window))
+          },
+          data: jdata,
+          xAxis: {
+            bottom: {
+            }
+          },
+          yAxis: {
+            left: {
+              unit: 'Count',
+              tickNumber: 5,
+              formadt (d) { // Format all series belong to this Y Axis
+                return d
+              }
+            }
+          },
+          zoom: {
+            visible: true,
+            onXZoom () {
+              console.log('im x zoom')
+            }
+          },
+          series: {
+            line: [{
+              name: 'Series-A',
+              color:"#386CB0",
+              lineWidth: '2px',
+              plotAxis: ["left", "bottom"]
+            }, {
+              name: 'Series-B',
+              color:"#666699",
+              lineWidth: '2px',
+              plotAxis: ["left", "bottom"]
+            }, {
+              name: 'Series-C',
+              color:"#368669",
+              lineWidth: '2px',
+              plotAxis: ["left", "bottom"]
+            }
+            ],
+            stack: []
+          }
+        };
+
+        vc.plotChart('#container', opts).then(chart => myChart = chart)
+</code></pre>
+    </div>
+</div>
 <br/><br/>
 <div id="container2" style="width: 90%;" ><svg>
 
