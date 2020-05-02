@@ -4,26 +4,36 @@
 <link rel="shortcut icon" href="#">
 <body>
 <h1 style="padding-bottom:10px;"> </h1>
+<!--<div style="height: 250px">Content 2</div>-->
+<!--<br/>-->
+<!--<div style="height: 250px">Content 2</div>-->
+<!--<br/>-->
+<!--<div style="height: 250px">Content 2</div>-->
+<!--<br/>-->
+<br/>
 <div id="container" style="width: 90%;" ><svg>
 
 </svg></div>
-<br/>
+<br/><br/>
+<br/><br/>
 <div id="container2" style="width: 90%;" ><svg>
 
 </svg></div>
 <br/><br/>
 <br/><br/>
 </body>
-<link rel="stylesheet" type="text/css" href="./dist/vector-charts.css">
+<link rel="stylesheet" type="text/css" href="vector-charts.css">
 <script>
   var myChart;
     window.onload = function () {
 
       function drawLineChart (jdata) {
+        console.log(jdata)
         var opts = {
           chart: {
             heading: "Timeseries",
             chartIndex: 2,
+            //width: 800,
             height: 270,
             margin: {
               top: 40,
@@ -150,7 +160,7 @@
         }
       }
 
-      fetch('./dataSource/dataTimeSeries2.json')
+      fetch('dataTimeSeries2.json')
         .then(status)
         .then((response) => {
           return response.json()
@@ -162,4 +172,4 @@
 
     }
 </script>
-<script src="./dist/vector-charts-lazy.js"></script>
+<script src="vector-charts-lazy.js"></script>

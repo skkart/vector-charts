@@ -1,7 +1,7 @@
 # vector-charts
 ***A light-weigth reusable charting library based on D3.js v5.***
 
-[Link to another page](./line.html)
+[Link to another page](../examples/Timeseries.html)
 
 
 **Timeseries Charts**
