@@ -21,8 +21,8 @@
 
 
 ## Quick Start
-Vector-charts is written in ES6, uses yarn package manager and built with webpack. \
-The released bundle supports AMD, CommonJS, and vanilla environments. \
+Vector-charts is written in ES6, uses yarn package manager and built with webpack.
+The released bundle supports AMD, CommonJS, and vanilla environments.
 Usage example:
 * Simply add the vector-charts assets to your project and include them in your HTML.
 ```
@@ -36,7 +36,7 @@ Usage example:
 <script src="vector-charts-lazy.min.js"></script>
 
 ``` 
-* You can create a custom bundle using webpack or your preferred bundler and import the vector-charts \
+* You can create a custom bundle using webpack or your preferred bundler and import the vector-charts
 in your application as shown below:
 ```
 import * as vc from "vector-charts"; // Import everything into a namespace (here, vc):
@@ -46,8 +46,8 @@ import {plotChart} from "vector-charts"; // To import specific module
 ```
 
 ## Dependencies
-Imports only few modules of D3.js in vector-charts and not the entrie D3.js modules. \
-Please check package.json for the various d3 packages dependencies imported.\
+Imports only few modules of D3.js in vector-charts and not the entrie D3.js modules.
+Please check package.json for the various d3 packages dependencies imported.
 Requires **D3.js ^5.0.0** - Greater than V5 version.
 
 
