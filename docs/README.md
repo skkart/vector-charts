@@ -1,9 +1,6 @@
 # vector-charts
 ***A light-weigth reusable charting library based on D3.js v5.***
 
-[Link to another page](./examples/Timeseries.html)
-[Link to Test page](./examples/New.html)
-
 **Timeseries Charts**
 * Line Chart - [Demo](./examples/line.html)
 * Area Chart - [Demo](./examples/area.html)
@@ -27,16 +24,15 @@ The released bundle supports AMD, CommonJS, and vanilla environments.
 Usage example:
 * Simply add the vector-charts assets to your project and include them in your HTML.
 ```js
-<!--Include CSS for Vector-charts -->
+ // Include CSS for Vector-charts
 <link rel="stylesheet" type="text/css" href="vector-charts.css">
 
 
-<!--Include Vector-charts - whole bundle, imports all Charts by default -->
+// Include Vector-charts - whole bundle, imports all Charts by default
 <script src="vector-charts.min.js"></script>  
           
-<!-- Include Vector-charts on demand - lazy bundle, imports required Charts based on demand and usage -->         
+// Include Vector-charts on demand - lazy bundle, imports required Charts based on demand and usage         
 <script src="vector-charts-lazy.min.js"></script>
-
 ``` 
 
 * You can create a custom bundle using webpack or your preferred bundler and import the vector-charts
