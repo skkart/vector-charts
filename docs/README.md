@@ -5,11 +5,11 @@
 [Link to Test page](./examples/New.html)
 
 **Timeseries Charts**
-* Line Chart - [Demo](https://jsfiddle.net/46jtemnd/2/)
-* Area Chart - [Demo](https://jsfiddle.net/46jtemnd/3/)
-* Line + Area Chart - [Demo](https://jsfiddle.net/38q9n1vx/)
-* Stacked Area Chart - [Demo](https://jsfiddle.net/46jtemnd/4/)
-* Line + Stacked Area Chart - [Demo](https://jsfiddle.net/1scrhgb8/)
+* Line Chart - [Demo](./examples/line.html)
+* Area Chart - [Demo](./examples/area.html)
+* Line + Area Chart - [Demo](./examples/line-area.html)
+* Stacked Area Chart - [Demo](./examples/stacked-area.html)
+* Line + Stacked Area Chart - [Demo](./examples/line-stacked-area.html)
 
 **Pieseries Charts**
 * Pie Chart - [Demo](https://jsfiddle.net/46jtemnd/5/)
