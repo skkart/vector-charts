@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="shortcut icon" href="#">
+<body>
+<h1 style="padding-bottom:10px;"> </h1>
+<div id="container" style="width: 90%;" ><svg>
+
+</svg></div>
+<br/>
+<div style="height: 250px">Content 2</div>
+<br/>
+<div id="container2" style="width: 90%;" ><svg>
+
+</svg></div>
+<br/><br/>
+<br/><br/>
+</body>
+<link rel="stylesheet" type="text/css" href="../dist/vector-charts.css">
+<script>
+  var myChart;
+    window.onload = function () {
+
+      function drawLineChart (jdata) {
+        var opts = {
+          chart: {
+            heading: "Timeseries",
+            chartIndex: 2,
+            //width: 800,
+            height: 270,
+            margin: {
+              top: 40,
+              right: 15,
+              bottom: 50,
+              left: 15
+            },
+            chartResize: true,
+            chartType: "timeseries",
+            isTouchScreen: !!(navigator.maxTouchPoints || ("ontouchstart" in window))
+          },
+          data: jdata,
+          xAxis: {
+            bottom: {
+            }
+          },
+          yAxis: {
+            left: {
+              unit: 'Count',
+              tickNumber: 5,
+              formadt (d) { // Format all series belong to this Y Axis
+                return d
+              }
+            }
+          },
+          zoom: {
+            visible: true,
+            onXZoom () {
+              console.log('im x zoom')
+            }
+          },
+          series: {
+            line: [{
+              name: 'Series-A',
+              color:"#386CB0",
+              lineWidth: '2px',
+              plotAxis: ["left", "bottom"]
+            }, {
+              name: 'Series-B',
+              color:"#666699",
+              lineWidth: '2px',
+              plotAxis: ["left", "bottom"]
+            }, {
+              name: 'Series-C',
+              color:"#368669",
+              lineWidth: '2px',
+              plotAxis: ["left", "bottom"]
+            }
+            ],
+            stack: []
+          }
+        };
+
+        vc.plotChart('#container', opts).then(chart => myChart = chart)
+      }
+
+      function drawStackChart (jdata) {
+        console.log(jdata)
+        var opts = {
+          chart: {
+            heading: "Timeseries",
+            chartIndex: 2,
+            //width: 800,
+            height: 270,
+            margin: {
+              top: 40,
+              right: 15,
+              bottom: 50,
+              left: 15
+            },
+            chartResize: true,
+            chartType: "timeseries"
+          },
+          data: jdata,
+          xAxis: {
+            bottom: {
+              label: 'Time',
+              tickNumber: 4
+            }
+          },
+          yAxis: {
+            left: {
+              unit: 'Count',
+              tickNumber: 5,
+              label: 'Count',
+              format (d) { // Format all series belong to this Y Axis
+                return d
+              }
+            }
+          },
+          zoom: {
+            visible: true,
+            onXZoom (st, et) {
+              console.log('im x zoom', st, et)
+            }
+          },
+          series: {
+            stack: [{
+              name: 'StackGroup', // Name of stack
+              plotAxis: ["left", "bottom"], // Define its axis dependency for all below defined series
+              stackOrderMembers: [{
+                name: 'Series-C',
+                color:"#1cb09f",
+              }, {
+                name: 'Series-B',
+                color:"#078609",
+              }, {
+                name: 'Series-A',
+                color:"#990506",
+              }]
+            }]
+          }
+        };
+
+        // myChart = vc.plotChart('#container2', opts)
+        vc.plotChart('#container2', opts).then(chart => myChart = chart)
+      }
+
+      function status(response) {
+        if (response.status >= 200 && response.status < 300) {
+          return Promise.resolve(response)
+        } else {
+          return Promise.reject(new Error(response.statusText))
+        }
+      }
+
+      fetch('dataTimeSeries2.json')
+        .then(status)
+        .then((response) => {
+          return response.json()
+        })
+        .then((jdata) => {
+          drawLineChart(jdata)
+          // drawStackChart(jdata)
+        })
+
+    }
+</script>
+<script src="../dist/vector-charts-lazy.js"></script>
