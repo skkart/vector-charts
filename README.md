@@ -25,7 +25,7 @@ Vector-charts is written in ES6, uses yarn package manager and built with webpac
 The released bundle supports AMD, CommonJS, and vanilla environments.
 Usage example:
 * Simply add the vector-charts assets to your project and include them in your HTML.
-```
+```html
 # Include CSS for Vector-charts
 <link rel="stylesheet" type="text/css" href="vector-charts.css">
 
@@ -38,7 +38,7 @@ Usage example:
 ``` 
 * You can create a custom bundle using webpack or your preferred bundler and import the vector-charts
 in your application as shown below:
-```
+```js
 import * as vc from "vector-charts"; // Import everything into a namespace (here, vc):
 
 import {plotChart} from "vector-charts"; // To import specific module
