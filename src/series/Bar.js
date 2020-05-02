@@ -1,16 +1,7 @@
 import ChartComponent from '@/charts/ChartComponent'
 import constants from '@/constants'
-import {
-  getObject
-} from '@/utils'
-import {
-  stack,
-  range,
-  transpose,
-  max,
-  select,
-  d3Event
-} from '@/d3Importer'
+import {getObject} from '@/utils'
+import {stack, range, transpose, max, select, d3Event} from '@/d3Importer'
 
 export default class Bar extends ChartComponent {
   constructor (opts) {
@@ -128,7 +119,7 @@ export default class Bar extends ChartComponent {
       .attr('width', this.xScale.bandwidth())
       .attr('height', 0)
       .on('mousemove', function (d, i) {
-        self.opts.chart.tooltip && self.opts.chart.tooltip.hover(d3Event.pageX, d3Event.pageY - 20, {
+        self.opts.chart.tooltip && self.opts.chart.tooltip.hover(d3Event.pageX, d3Event.pageY, {
           data: {
             val: self.opts.barData[i],
             ind: i

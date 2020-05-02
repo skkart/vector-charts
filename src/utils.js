@@ -73,8 +73,7 @@ export function getObject (obj, dotKey, def = null) {
       break
     }
   }
-
-  return mdl
+  return mdl === undefined ? def : mdl
 }
 
 export function throttle (fun, wait) {

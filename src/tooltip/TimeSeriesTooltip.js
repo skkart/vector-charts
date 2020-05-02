@@ -147,6 +147,14 @@ export default class TimeSeriesTooltip extends ChartComponent {
           self.hide()
         })
 
+      if (this.opts.chart.options.chart.isTouchScreen) {
+        // In case of touch screen, simulate tooltip hover for first time to auto compute elementOffset
+        this.hover(0, 0, dataSet[0])
+        setTimeout(function () {
+          self.hide()
+        }, 25)
+      }
+
     })
   }
 

@@ -44,5 +44,5 @@ export {
 export {zoom, zoomTransform} from 'd3-zoom'
 
 export default {
-  version: 'v5',
+  version: 'v5'
 }

@@ -1,10 +1,10 @@
 import ChartComponent from '@/charts/ChartComponent'
 import {getObject, isFunction, emptyFn} from '@/utils'
-import {brushX, brushY, d3Event, d3Touches, zoom} from '@/d3Importer'
+import {brushY, d3Event, d3Touches, zoom} from '@/d3Importer'
 import constants from '@/constants'
 import {bisector} from 'd3-array'
 
-export default class Zoom extends ChartComponent {
+export default class GestureZoom extends ChartComponent {
   constructor (opts) {
     super()
     this.opts = Object.assign({
@@ -46,7 +46,6 @@ export default class Zoom extends ChartComponent {
     const yScaleLeft = getObject(this.opts, 'chart.yAxis.scale') || false
     const yScaleRight = getObject(this.opts, 'chart.yAxis2.scale') || false
     const dataSet = this.opts.chart.options.chartData
-    const brushOverlay = null
     if (xScale) {
 
       // Create x axis brush for Zoom operation
@@ -57,40 +56,9 @@ export default class Zoom extends ChartComponent {
           [this.opts.chart.chartWidth, this.opts.chart.chartHeight]])
         .extent([[this.opts.chart.margin.left, this.opts.chart.margin.top], [this.opts.chart.chartWidth, this.opts.chart.chartHeight]])
         .touchable(() => true)
-        // .on('zoom', (...args) => {
-        //   var transform = zoomTransform(this)
-        //   // console.log('Arg', args)
-        //   console.log('tran', transform.toString())
-        //   const d0 = d3Touches && d3Event.transform.rescaleX(xScale).domain()
-        //   const d1 = d0 && d0.map(Math.round)
-        //   console.log('Zoom Transform Start', new Date(d1[0]))
-        //   console.log('Zoom Transform End', new Date(d1[1]))
-        //
-        //   // callZoom(d1)
-        // })
-      // this.brushX = brushX()
-      //   .extent([
-      //     [0, 0],
-      //     [this.opts.chart.chartWidth, this.opts.chart.chartHeight]
-      //   ])
-      // .touchable(true)
 
       this.zoomXDiv = this.opts.chart.svg
-      // this.zoomXDiv = this.opts.chart.graphZone
-      // this.zoomXDiv = this.opts.chart.mouseHandler.mouseBrush
         .call(this.zoomX)
-
-      // Use the same mouseBrush for both xBrush and tooltip
-      // this.brushXDiv = this.opts.chart.mouseHandler.mouseBrush
-      //   .call(this.brushX)
-
-      // brushOverlay = this.brushXDiv.selectAll('rect.overlay')
-
-      this.brushX = brushX()
-        .extent([
-          [0, 0],
-          [this.opts.chart.chartWidth, this.opts.chart.chartHeight]
-        ])
 
 
       // Use the same mouseBrush for both xBrush and tooltip
@@ -107,86 +75,62 @@ export default class Zoom extends ChartComponent {
       let isGesture = false
       let startPos = 0
       let endPos = 0
+      const tooltip = self.opts.chart.tooltip
       this.zoomXDiv
         .style('touch-action', 'pan-y')
         .on('touchstart.zoom', function () {
-          const th = d3Touches(this)
+          const touches = d3Touches(this)
           isGesture = d3Event.touches && d3Event.touches.length === 2
-          if (th && th.length) {
-            const xPos = (th[0][0] - self.opts.chart.margin.left)
-            const xval = xScale.invert(xPos)
-            const time = Math.round(xval)
-            startDt = time
-            endDt = time
+          if (isGesture && touches.length) {
+            tooltip && tooltip.hide()
+            const xPos = (touches[0][0] - self.opts.chart.margin.left)
             startPos = xPos
             endPos = xPos
-            console.log('start here ,', new Date(time))
-            if (isGesture) {
-              console.log('Start Select')
-              self.updatebrushXSelection(startPos, endPos)
-            }
-          }
-        })
-        .on('touchmove.zoom', function () {
-          const th = d3Touches(this)
-          console.log('move', th)
-          window.mv = th
-          if (isGesture && th.length) {
-            const xPos1 = (th[0][0] - self.opts.chart.margin.left)
-            const xPos2 = (th[0][0] - self.opts.chart.margin.left)
-            const xval1 = xScale.invert(xPos1)
-            const xval2 = xScale.invert(xPos)
-            const time = Math.round(xval)
-            // timeArr.push(time)
-            if (startDt > time) {
-              startDt = time
-              startPos = xPos
-            }
-            if (endDt < time) {
-              endDt = time
-              endPos = xPos
-            }
-            console.log('move here ,', new Date(time))
-            if (isGesture) {
-              console.log('Update Select')
-              self.updatebrushXSelection(startPos, endPos)
-            }
-          }
-        })
-        .on('touchend.zoom', function () {
-          const th = d3Touches(this)
-          console.log('end', th)
-          if (th && th.length) {
-            const xPos = (th[0][0] - self.opts.chart.margin.left)
-            const xval = xScale.invert(xPos)
-            const time = Math.round(xval)
-            if (startDt > time) {
-              startDt = time
-              startPos = xPos
-            }
-            if (endDt < time) {
-              endDt = time
-              endPos = xPos
-            }
-            console.log('end here ,', new Date(time))
-          }
-          // console.log('Final Time', timeArr)
-          // const st = new Date(timeArr[0])
-          // const ed = new Date(timeArr[timeArr.length - 1])
-          // console.log('Start ', st)
-          // console.log('End ', ed)
-          if (isGesture) {
-            console.log('Final Select')
             self.updatebrushXSelection(startPos, endPos)
-            console.log(self.getClosestXAxisData(startDt, dataSet))
-            console.log(self.getClosestXAxisData(endDt, dataSet))
           }
-          // isGesture && console.log('Start: ' + st + '  End: ' + ed)
-          // timeArr = []
-          startDt = 0
-          endDt = 0
+        }, true)
+        .on('touchmove.zoom', function () {
+          const touches = d3Touches(this)
+          if (isGesture && touches.length) {
+            const xPos1 = (touches[0][0] - self.opts.chart.margin.left)
+            const xPos2 = (touches[1][0] - self.opts.chart.margin.left)
+            let xMin = xPos1
+            let xMax = xPos2
+            if (xPos1 > xPos2) {
+              xMin = xPos2
+              xMax = xPos1
+            }
+            startPos = xMin
+            endPos = xMax
+            self.updatebrushXSelection(startPos, endPos)
+          }
+        }, true)
+        .on('touchend.zoom', function () {
+          const touches = d3Touches(this)
+          if (isGesture && touches.length) {
+            const xPos = (touches[0][0] - self.opts.chart.margin.left)
+            if (startPos > xPos) {
+              startPos = xPos
+            }
+            if (endPos < xPos) {
+              endPos = xPos
+            }
+
+            const startVal = xScale.invert(startPos)
+            const startDt = Math.round(startVal)
+
+            const endVal = xScale.invert(endPos)
+            const endDt = Math.round(endVal)
+            self.updatebrushXSelection(startPos, endPos)
+
+            // Used onZoom.call(), so that external function can have access of chart Instance
+            isFunction(self.opts.onZoom) && self.opts.onZoom.call(self.opts.chart, startDt, endDt)
+            self.updatebrushXSelection(0, 0)
+          }
+          startPos = 0
+          endPos = 0
           isGesture = false
-        })
+        }, true)
 
     }
 
@@ -257,28 +201,28 @@ export default class Zoom extends ChartComponent {
       })
     }
 
-    brushOverlay && this.opts.chart.mouseHandler.register(function () {
-      // When mouse is clicked or down, enable zoom brush and its mouse cursor
-      brushOverlay
-        .on('mousedown', function () {
-          brushOverlay.style('cursor', 'col-resize')
-        })
-        .on('click', function () {
-          brushOverlay.style('cursor', 'auto')
-        })
-    })
     this.update()
 
   }
 
   update () {
-    if (this.brushX) {
-      this.brushX.extent([
-        [0, 0],
-        [this.opts.chart.chartWidth, this.opts.chart.chartHeight]
-      ])
+    if (this.zoomX) {
+      this.zoomX
+        .translateExtent([
+          [this.opts.chart.margin.left, this.opts.chart.margin.top],
+          [this.opts.chart.chartWidth, this.opts.chart.chartHeight]
+        ])
+        .extent([
+          [this.opts.chart.margin.left, this.opts.chart.margin.top],
+          [this.opts.chart.chartWidth, this.opts.chart.chartHeight]
+        ])
 
-      this.brushXDiv.call(this.brushX)
+      this.brushXDiv
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', 0)
+        .attr('height', this.opts.chart.chartHeight)
+
     }
 
     if (this.brushYLeft) {
@@ -316,7 +260,6 @@ export default class Zoom extends ChartComponent {
 
   remove () {
     if (this.brushXDiv) {
-      this.brushXDiv.call(this.brushX.move, null)
       this.brushXDiv && this.brushXDiv.remove()
     }
     if (this.brushYLeftDiv) {

@@ -9,15 +9,27 @@ export default class BarSeries extends Series {
     this.plotSeries = []
     const data = this.opts.chart.options.chartData // Accept either timeseries or pieseries
     const plotInfo = this.opts.chart.options.series
+    const isBarPlot = isArray(plotInfo.bar) && plotInfo.bar.length
+    const isStackPlot = isArray(plotInfo.stack) && plotInfo.stack.length
+    let arrayData = []
+
+    // check which data needs to be passed and present
+    if (isBarPlot) {
+      arrayData = plotInfo.bar
+    } else if (isStackPlot) {
+      arrayData = plotInfo.stack
+    }
 
     // Create plot components based on input options and each plot info
-    isArray(plotInfo.bar) && plotInfo.bar.forEach((plotData) => {
+    arrayData.forEach((plotData) => {
       this.plotSeries.push(new Bar({
         chart: this.opts.chart,
         className: plotData.className || plotData.name,
         plotAxis: plotData.plotAxis,
         xAxisTarget: this.opts.chart.options.timeInfo.dataIndex,
-        barOrderMembers: plotData.barOrderMembers,
+        barOrderMembers: plotData.barOrderMembers || plotData.stackOrderMembers,
+        barType: plotData.barType || '',
+        events: plotData.events || {},
         barData: data
       }))
     })

@@ -1,5 +1,7 @@
 import ChartAxisParser from '@/data-parser/ChartAxisParser'
 import {getObject, refineString, isBoolean} from '@/utils'
+import constants from '@/constants'
+
 
 export default class BasicBSParser extends ChartAxisParser {
   constructor (opts) {
@@ -24,9 +26,9 @@ export default class BasicBSParser extends ChartAxisParser {
       return this.dataOptions
 
     } catch (err) {
-      console.log('Error encountered while barseries JSON parsing :', err)
+      console.log('Error encountered while bar series JSON parsing :', err)
       this.opts.onError(err)
-      throw new Error('Invalid JSON received - Error on barseries JSON parsing')
+      throw new Error('Invalid JSON received - Error on bar series JSON parsing')
     }
   }
 
@@ -95,13 +97,6 @@ export default class BasicBSParser extends ChartAxisParser {
 
       if (findEachPlotRange) {
 
-        // Reset range for each plot for finding min , max
-        for (const plot in eachPlotSet) {
-          const eachPlot = eachPlotSet[plot]
-          eachPlot.minVal = Infinity
-          eachPlot.maxVal = -Infinity
-        }
-
         // Calculate Max and Min for each plots series
         let valData = 0
         data.forEach(function (d) {
@@ -114,6 +109,25 @@ export default class BasicBSParser extends ChartAxisParser {
             if (valData > eachPlot.maxVal) {
               eachPlot.maxVal = valData
             }
+            // Attach value range for stacked bar data
+            plotInfo.bar && plotInfo.bar.forEach(function (plotData) {
+              if (plotData.barType === constants.STACKED_BAR) {
+                const memberArr = plotData.barOrderMembers
+                let sum = 0
+                // Calculate maximum and minimum range for stacked group by adding all the data
+                memberArr.forEach(function (member) {
+                  sum += (eachPlotSet[member.name].visible ? d[eachPlotSet[member.name].dataIndex] : 0)
+                })
+
+                if (sum < plotData.valueRange[0]) {
+                  plotData.valueRange[0] = sum
+                }
+                if (sum > plotData.valueRange[1]) {
+                  plotData.valueRange[1] = sum
+                }
+              }
+
+            })
           }
         })
       }
@@ -122,22 +136,34 @@ export default class BasicBSParser extends ChartAxisParser {
       let allMax = -Infinity
       let allMax2 = -Infinity
       for (key in plotInfo) {
-        if (key === 'bar') {
+        if (key === constants.BAR_KEY) {
           plotInfo[key].forEach(function (plotData) {
-            const memberArr = plotData.barOrderMembers
-            memberArr.forEach(function (member) {
-              if (eachPlotSet[member.name].visible && eachPlotSet[member.name].plotAxis[0] === 'left' && eachPlotSet[member.name].maxVal > allMax) {
-                allMax = eachPlotSet[member.name].maxVal
+            // calculate maximum and minimum range if bar type is a grouped bar
+            if (plotData.barType === constants.GROUPED_BAR) {
+              const memberArr = plotData.barOrderMembers
+              memberArr.forEach(function (member) {
+                if (eachPlotSet[member.name].visible && eachPlotSet[member.name].plotAxis[0] === constants.DIR_LEFT && eachPlotSet[member.name].maxVal > allMax) {
+                  allMax = eachPlotSet[member.name].maxVal
+                }
+                if (eachPlotSet[member.name].visible && eachPlotSet[member.name].plotAxis[0] === constants.DIR_RIGHT && eachPlotSet[member.name].maxVal > allMax2) {
+                  allMax2 = eachPlotSet[member.name].maxVal
+                }
+              })
+            } else if (plotData.barType === constants.STACKED_BAR) {
+              if (plotData.plotAxis[0] === constants.DIR_LEFT && plotData.valueRange[1] > allMax) {
+                allMax = plotData.valueRange[1]
               }
-              if (eachPlotSet[member.name].visible && eachPlotSet[member.name].plotAxis[0] === 'right' && eachPlotSet[member.name].maxVal > allMax2) {
-                allMax2 = eachPlotSet[member.name].maxVal
+              if (plotData.plotAxis[0] === constants.DIR_RIGHT && plotData.valueRange[1] > allMax2) {
+                allMax2 = plotData.valueRange[1]
               }
-            })
+
+            }
+
           })
         }
       }
 
-      // // Find min value just by checking min value among all series data
+      // Find min value just by checking min value among all series data
       let allMin = Infinity
       let allMin2 = Infinity
       for (key in eachPlotSet) {
@@ -203,8 +229,8 @@ export default class BasicBSParser extends ChartAxisParser {
     const dataOptions = this.dataOptions
     const resJson = dataOptions.data
     const seriesData = resJson.barseries
-    const columns = seriesData.columns
-    let ind = 0
+    const columns = seriesData.columns.slice(1) // Ignore the first column, As it corresponds to x axis
+    let ind = 1
     // Object that contains all plot functions needed for the chart
     const eachPlotSet = {}
     // Set of rules that charts needs to be draw on timeSeriesChart

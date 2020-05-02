@@ -7,9 +7,8 @@ import ChartAxisParser from '@/data-parser/ChartAxisParser'
 import BasicTSParser from '@/data-parser/BasicTSParser'
 import Tooltip from '@/tooltip/TimeSeriesTooltip'
 import MouseHandler from '@/mouse-handler'
-// import Zoom from '@/zoom'
-// import Zoom from '@/zoom/PinchIndex'
-import Zoom from '@/zoom/indexTouch'
+import Zoom from '@/zoom'
+import GestureZoom from '@/zoom/GestureZoom'
 import TimeSeriesLegend from '@/legend/TimeSeriesLegend'
 import TimeSeries from '@/series/TimeSeries'
 import {select} from '@/d3Importer'
@@ -108,7 +107,11 @@ export default class TimeSeriesChart extends Chart {
     }
 
     if (this.options.zoom.visible) {
-      this.zoomBrush = new Zoom({
+      let zoomFn = Zoom
+      if (this.options.chart.isTouchScreen) {
+        zoomFn = GestureZoom
+      }
+      this.zoomBrush = new zoomFn({
         chart: this,
         onZoom: this.options.zoom.onXZoom,
         onY1Zoom: this.options.zoom.onY1Zoom,

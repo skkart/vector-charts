@@ -17,6 +17,7 @@ export default {
   TOOLTIP_TOP_BUFFER: 20,
   GROUPED_BAR: 'grouped',
   STACKED_BAR: 'stacked',
+  BAR_KEY: 'bar',
   VERT_POS_LEGEND: 65,
   LEGEND_RECT_SIZE: 12,
   LEGEND_SPACE: 30,

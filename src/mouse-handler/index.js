@@ -21,25 +21,26 @@ export default class MouseHandler extends ChartComponent {
       this.mouseBrush.attr('cursor', 'pointer')
     }
 
-    // if (!this.opts.chart.options.zoom.visible) {
-    //
-    // }
-    // x-Zoom for chart doest not exist, Add rect overlay for brushXDiv
-    this.mouseBrush.append('rect')
-      .attr('class', 'overlay')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', this.opts.chart.chartWidth)
-      .attr('height', this.opts.chart.chartHeight)
+    if (!this.opts.chart.options.zoom.visible || this.opts.chart.options.chart.isTouchScreen) {
+      // x-Zoom for chart doest not exist, Add rect overlay for brushXDiv or add In case of zoom with touch screen
+      this.mouseBrush.append('rect')
+        .attr('class', 'overlay')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', this.opts.chart.chartWidth)
+        .attr('height', this.opts.chart.chartHeight)
+    }
   }
 
   update () {
     this.mouseBrush.attr('width', this.opts.chart.chartWidth)
       .attr('height', this.opts.chart.chartHeight)
       .attr('transform', `translate(${this.opts.chart.margin.left},${this.opts.chart.margin.top})`)
-    this.mouseBrush.select('rect.overlay')
-      .attr('width', this.opts.chart.chartWidth)
-      .attr('height', this.opts.chart.chartHeight)
+    if (!this.opts.chart.options.zoom.visible || this.opts.chart.options.chart.isTouchScreen) {
+      this.mouseBrush.select('rect.overlay')
+        .attr('width', this.opts.chart.chartWidth)
+        .attr('height', this.opts.chart.chartHeight)
+    }
   }
 
   showHide (showFlag) {

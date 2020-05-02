@@ -26,14 +26,10 @@ export default class Zoom extends ChartComponent {
           [0, 0],
           [this.opts.chart.chartWidth, this.opts.chart.chartHeight]
         ])
-        // .touchable(true)
-      window.bx = brushX()
-      window.bbx = this.brushX
 
       // Use the same mouseBrush for both xBrush and tooltip
       this.brushXDiv = this.opts.chart.mouseHandler.mouseBrush
         .call(this.brushX)
-
 
       brushOverlay = this.brushXDiv.selectAll('rect.overlay')
 
@@ -48,7 +44,6 @@ export default class Zoom extends ChartComponent {
           
         const d1 = d0 && d0.map(Math.round) // round both values
 
-        console.log('d1', d1)
         // clear Brush
         self.brushXDiv.call(self.brushX.move, null)
         brushOverlay.style('cursor', 'auto')
@@ -66,7 +61,7 @@ export default class Zoom extends ChartComponent {
 
 
         // Used onZoom.call(), so that external function can have access of chart Instance
-        self.opts && self.opts.onZoom.call(self.opts.chart, d1[0], d1[1])
+        isFunction(self.opts.onZoom) && self.opts.onZoom.call(self.opts.chart, d1[0], d1[1])
 
       })
     }

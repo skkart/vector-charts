@@ -8,6 +8,7 @@ import Tooltip from '@/tooltip/BasicTooltip'
 import BasicBSParser from '@/data-parser/BasicBSParser'
 import BarSeries from '@/series/BarSeries'
 import {select} from '@/d3Importer'
+import TimeSeriesLegend from '@/legend/TimeSeriesLegend'
 
 export default class BarSeriesChart extends Chart {
   constructor (container, opts) {
@@ -101,6 +102,20 @@ export default class BarSeriesChart extends Chart {
       // Register the component for draw, update, showHide and remove
       this.chartComponentsArr.push(this.series)
     }
+
+    if (this.options.legend && this.options.legend.visible) {
+      this.legends = new TimeSeriesLegend({
+        chart: this,
+        legendPrefix: this.options.legend.legendPrefix,
+        position: constants.DIR_TOP,
+        disableSeriesToggle: true, // Disable series toggle effect for bar graph. TODO: Need to support toggling of series
+        onLegendChange: this.options.legend.onLegendChange
+      })
+
+      this.chartComponentsArr.push(this.legends)
+    }
+
+
   }
 
   draw () {
