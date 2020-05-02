@@ -1,22 +1,24 @@
-# vector-charts
+# [vector-charts](https://skkart.github.io/vector-charts/)
 ***A light-weigth reusable charting library based on D3.js v5.***
 
+Demo: https://skkart.github.io/vector-charts/
 
+***Types of Graph Supported***
 
 **Timeseries Charts**
-* Line Chart - [Demo](https://jsfiddle.net/46jtemnd/2/)
-* Area Chart - [Demo](https://jsfiddle.net/46jtemnd/3/)
-* Line + Area Chart - [Demo](https://jsfiddle.net/38q9n1vx/)
-* Stacked Area Chart - [Demo](https://jsfiddle.net/46jtemnd/4/)
-* Line + Stacked Area Chart - [Demo](https://jsfiddle.net/1scrhgb8/)
+* Line Chart
+* Area Chart
+* Line + Area Chart
+* Stacked Area Chart
+* Line + Stacked Area Chart
 
 **Pieseries Charts**
-* Pie Chart - [Demo](https://jsfiddle.net/46jtemnd/5/)
-* Donut Chart - [Demo](https://jsfiddle.net/46jtemnd/6/)
+* Pie Chart
+* Donut Chart
 
 **Barseries Charts**
-* Bar Chart - [Demo](https://jsfiddle.net/46jtemnd/8/)
-* Multi series Bar Chart - [Demo](https://jsfiddle.net/46jtemnd/7/)
+* Bar Chart
+* Multi series Bar Chart
 
 
 
@@ -25,17 +27,17 @@ Vector-charts is written in ES6, uses yarn package manager and built with webpac
 The released bundle supports AMD, CommonJS, and vanilla environments.
 Usage example:
 * Simply add the vector-charts assets to your project and include them in your HTML.
+
 ```html
-<!--Include CSS for Vector-charts -->
+ // Include CSS for Vector-charts
 <link rel="stylesheet" type="text/css" href="vector-charts.css">
 
 
-<!--Include Vector-charts - whole bundle, imports all Charts by default -->
+// Include Vector-charts - whole bundle, imports all Charts by default
 <script src="vector-charts.min.js"></script>  
-          
-<!-- Include Vector-charts on demand - lazy bundle, imports required Charts based on demand and usage -->         
+         
+// Include Vector-charts on demand - lazy bundle, imports required Charts based on demand and usage         
 <script src="vector-charts-lazy.min.js"></script>
-
 ``` 
 
 * You can create a custom bundle using webpack or your preferred bundler and import the vector-charts
@@ -72,5 +74,4 @@ Recommended that you upgrade to the latest version of one of the below-listed br
 [MIT](LICENSE)
 
 Copyright (c) 2019 Karthik S
-
 
