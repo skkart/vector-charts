@@ -2,7 +2,7 @@
 ***A light-weigth reusable charting library based on D3.js v5.***
 
 [Link to another page](./examples/Timeseries.html)
-
+[Link to Test page](./examples/New.html)
 
 **Timeseries Charts**
 * Line Chart - [Demo](https://jsfiddle.net/46jtemnd/2/)
