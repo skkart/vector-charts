@@ -25,7 +25,7 @@ Vector-charts is written in ES6, uses yarn package manager and built with webpac
 The released bundle supports AMD, CommonJS, and vanilla environments.
 Usage example:
 * Simply add the vector-charts assets to your project and include them in your HTML.
-```html
+```js
 <!--Include CSS for Vector-charts -->
 <link rel="stylesheet" type="text/css" href="vector-charts.css">
 
