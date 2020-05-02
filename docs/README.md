@@ -12,12 +12,12 @@
 * Line + Stacked Area Chart - [Demo](./examples/line-stacked-area.html)
 
 **Pieseries Charts**
-* Pie Chart - [Demo](https://jsfiddle.net/46jtemnd/5/)
-* Donut Chart - [Demo](https://jsfiddle.net/46jtemnd/6/)
+* Pie Chart - [Demo](./examples/pie.html)
+* Donut Chart - [Demo](./examples/donut.html)
 
 **Barseries Charts**
-* Bar Chart - [Demo](https://jsfiddle.net/46jtemnd/8/)
-* Multi series Bar Chart - [Demo](https://jsfiddle.net/46jtemnd/7/)
+* Bar Chart - [Demo](./examples/bar.html)
+* Multi series Bar Chart - [Demo](./examples/series-bar.html)
 
 
 

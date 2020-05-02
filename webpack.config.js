@@ -1,7 +1,7 @@
 const path = require('path')
 const SRC_DIR = path.resolve(__dirname, './src/')
 const DIST_DIR = path.resolve(__dirname, './dist/')
-const EX_DIR = path.resolve(__dirname, './examples/')
+const DOC_DIR = path.resolve(__dirname, './docs/examples/')
 const CopyPlugin = require('copy-webpack-plugin')
 
 
@@ -33,7 +33,7 @@ var config = {
   plugins: [
     new CopyPlugin([
       { from: path.resolve(SRC_DIR, 'vector-charts.css'), to: DIST_DIR },
-      { from: DIST_DIR, to: EX_DIR}
+      { from: DIST_DIR, to: DOC_DIR}
     ]),
   ],
   resolve: {

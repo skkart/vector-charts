@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="shortcut icon" href="#">
+<style>
+    .chartBlock {
+        display:flex;
+        flex-wrap: wrap;
+    }
+    .chart {
+        width: 58%;
+        margin-right: 20px;
+    }
+    .codeSnippet {
+        margin-left: 20px;
+        width: 38%;
+    }
+    .codeSnippet pre {
+        font-size: 13px;
+        max-height: 500px;
+        padding: 10px;
+        overflow: auto;
+        color: rgb(255, 255, 255);
+        background-color: rgb(52, 52, 52);
+    }
+    @media screen and (max-width: 1050px) {
+        .chart {
+            width: 98%;
+            margin-right: 20px;
+        }
+        .codeSnippet {
+            margin-left: 20px;
+            width: 98%;
+        }
+    }
+</style>
+<body>
+<h3 style="padding-bottom:10px;">PieSeries > Donut Chart</h3>
+<br/>
+<br/>
+<div class="chartBlock">
+    <div id="container" class="chart">
+        <svg>
+        </svg>
+    </div>
+    <div class="codeSnippet">
+        Snippet:
+        <pre>
+const opts = {
+  chart: {
+    heading: "Pieseries",
+    chartIndex: 2,
+    height: 270,
+    margin: {
+      top: 40,
+      right: 15,
+      bottom: 50,
+      left: 15
+    },
+    chartResize: true,
+    chartType: "pieseries"
+  },
+  data: jdata,
+  series: {
+    pie: {
+      name: 'PieChart', // Name taken from timeseries.columns
+      visible: true,
+      unit: 'Count',
+      donutPercent: 40 // Specify percent to show donut ring
+    }
+  }
+};
+vc.plotChart('#container', opts).then(chart => myChart = chart)
+        </pre>
+    </div>
+</div>
+</body>
+<link rel="stylesheet" type="text/css" href="vector-charts.css">
+<script>
+  var myChart;
+  window.onload = function () {
+
+    function drawChart (jdata) {
+      console.log(jdata)
+      const opts = {
+        chart: {
+          heading: "Pieseries",
+          chartIndex: 2,
+          height: 270,
+          margin: {
+            top: 40,
+            right: 15,
+            bottom: 50,
+            left: 15
+          },
+          chartResize: true,
+          chartType: "pieseries"
+        },
+        data: jdata,
+        series: {
+          pie: {
+            name: 'PieChart', // Name taken from timeseries.columns
+            visible: true,
+            unit: 'Count',
+            donutPercent: 40 // Specify percent to show donut ring
+          }
+        }
+      };
+
+      vc.plotChart('#container', opts).then(chart => myChart = chart)
+    }
+
+    function status(response) {
+      if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response)
+      } else {
+        return Promise.reject(new Error(response.statusText))
+      }
+    }
+
+    fetch('dataPie.json')
+      .then(status)
+      .then((response) => {
+        return response.json()
+      })
+      .then((jdata) => {
+        drawChart(jdata)
+      })
+
+  }
+</script>
+<script src="vector-charts-lazy.js"></script>
