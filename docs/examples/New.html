@@ -1,112 +1,147 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: "en-US" }}">
+<html lang="en-US">
 <head>
-
     <meta charset="UTF-8">
 
-    {% seo %}
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <title>vector-charts | A light-weight reusable charting library based on D3.js v5</title>
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <meta property="og:title" content="vector-charts" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="A light-weight reusable charting library based on D3.js v5" />
+    <meta property="og:description" content="A light-weight reusable charting library based on D3.js v5" />
+    <link rel="canonical" href="https://skkart.github.io/vector-charts/" />
+    <meta property="og:url" content="https://skkart.github.io/vector-charts/" />
+    <meta property="og:site_name" content="vector-charts" />
+    <script type="application/ld+json">
+{"@type":"WebSite","headline":"vector-charts","url":"https://skkart.github.io/vector-charts/","name":"vector-charts","description":"A light-weight reusable charting library based on D3.js v5","@context":"https://schema.org"}</script>
+    <!-- End Jekyll SEO tag -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="https://skkart.github.io/vector-charts/assets/css/style.css?v=12dfefa7734d5461d38ec3421524c1aeeb39f0d8" />
+    <style>
+        .page-header {
+            padding: 5px 5px !important;
+        }
+
+        .chart {
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        .codeSnippet {
+            margin-left: 20px;
+            width: 38%;
+        }
+        .codeSnippet pre {
+            font-size: 13px;
+            height: 500px;
+            padding: 10px;
+            overflow: auto;
+            color: rgb(255, 255, 255);
+            background-color: rgb(52, 52, 52);
+        }
+        @media screen and (max-width: 1050px) {
+            .chart {
+                margin-right: 20px;
+            }
+            .codeSnippet {
+                margin-left: 20px;
+                width: 98%;
+            }
+        }
+    </style>
 </head>
 <body>
-<a id="skip-to-content" href="#content">Skip to the content.</a>
+<section class="page-header">
+    <h1 class="project-name">vector-charts</h1>
+    <h2 class="project-tagline">A light-weight reusable charting library based on D3.js v5</h2>
 
-<header class="page-header" role="banner">
-    <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
-    <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
-    {% if site.github.is_project_page %}
-    <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
-    {% endif %}
-    {% if site.show_downloads %}
-    <a href="{{ site.github.zip_url }}" class="btn">Download .zip</a>
-    <a href="{{ site.github.tar_url }}" class="btn">Download .tar.gz</a>
-    {% endif %}
-</header>
+    <a href="https://github.com/skkart/vector-charts" class="btn">View on GitHub</a>
 
-<main id="content" class="main-content" role="main">
-    {{ content }}
-    <div id="container" style="width: 90%;" ><svg>
 
-    </svg></div>
-    <br/><br/>
+</section>
 
-    <div class="language-plaintext highlighter-rouge">
-        Usage:
-        <div class="highlight"><pre class="highlight"><code>
-var opts = {
-          chart: {
-            heading: "Timeseries",
-            chartIndex: 2,
-            //width: 800,
-            height: 270,
-            margin: {
-              top: 40,
-              right: 15,
-              bottom: 50,
-              left: 15
-            },
-            chartResize: true,
-            chartType: "timeseries",
-            isTouchScreen: !!(navigator.maxTouchPoints || ("ontouchstart" in window))
-          },
-          data: jdata,
-          xAxis: {
-            bottom: {
-            }
-          },
-          yAxis: {
-            left: {
-              unit: 'Count',
-              tickNumber: 5,
-              formadt (d) { // Format all series belong to this Y Axis
+<section class="main-content">
+    <h2 id="quick-start">TimeSeries > Line Chart</h2>
+    <div id="container" class="chart">
+        <svg>
+        </svg>
+    </div>
+    <h2>Snippet</h2>
+    <div class="language-html highlighter-rouge">
+        <div class="highlight">
+            <pre class="highlight">
+                <code>
+ const opts = {
+    chart: {
+        heading: "Timeseries",
+        chartIndex: 2,
+        height: 270,
+        margin: {
+            top: 40,
+            right: 15,
+            bottom: 50,
+            left: 15
+        },
+        chartResize: true,
+        chartType: "timeseries",
+        isTouchScreen: !!(navigator.maxTouchPoints || ("ontouchstart" in window))
+    },
+    data: jdata,
+    yAxis: {
+        left: {
+            unit: 'Count',
+            tickNumber: 5,
+            formadt(d) { // Format all series belong to this Y Axis
                 return d
-              }
             }
-          },
-          zoom: {
-            visible: true,
-            onXZoom () {
-              console.log('im x zoom')
-            }
-          },
-          series: {
-            line: [{
-              name: 'Series-A',
-              color:"#386CB0",
-              lineWidth: '2px',
-              plotAxis: ["left", "bottom"]
-            }, {
-              name: 'Series-B',
-              color:"#666699",
-              lineWidth: '2px',
-              plotAxis: ["left", "bottom"]
-            }, {
-              name: 'Series-C',
-              color:"#368669",
-              lineWidth: '2px',
-              plotAxis: ["left", "bottom"]
-            }
-            ],
-            stack: []
-          }
-        };
+        }
+    },
+    zoom: {
+        visible: true,
+        onXZoom() {
+            console.log('im x zoom')
+        }
+    },
+    series: {
+        line: [{
+            name: 'Series-A',
+            color: "#386CB0",
+            lineWidth: '2px',
+            plotAxis: ["left", "bottom"]
+        }, {
+            name: 'Series-B',
+            color: "#666699",
+            lineWidth: '2px',
+            plotAxis: ["left", "bottom"]
+        }, {
+            name: 'Series-C',
+            color: "#368669",
+            lineWidth: '2px',
+            plotAxis: ["left", "bottom"]
+        }]
+    }
+};
 
-        vc.plotChart('#container', opts).then(chart => myChart = chart)
-</code></pre>
+vc.plotChart('#container', opts).then(chart => myChart = chart)
+                </code>
+            </pre>
         </div>
     </div>
-    <br/><br/>
+
 
     <footer class="site-footer">
-        {% if site.github.is_project_page %}
-        <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
-        {% endif %}
+
+        <span class="site-footer-owner"><a href="https://github.com/skkart/vector-charts">vector-charts</a> is maintained by <a href="https://github.com/skkart">skkart</a>.</span>
+
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
     </footer>
-</main>
+</section>
+
+
 </body>
+
 <link rel="stylesheet" type="text/css" href="vector-charts.css">
 <script>
   var myChart;
@@ -114,11 +149,10 @@ var opts = {
 
     function drawLineChart (jdata) {
       console.log(jdata)
-      var opts = {
+      const opts = {
         chart: {
           heading: "Timeseries",
           chartIndex: 2,
-          //width: 800,
           height: 270,
           margin: {
             top: 40,
@@ -175,68 +209,6 @@ var opts = {
       vc.plotChart('#container', opts).then(chart => myChart = chart)
     }
 
-    function drawStackChart (jdata) {
-      console.log(jdata)
-      var opts = {
-        chart: {
-          heading: "Timeseries",
-          chartIndex: 2,
-          //width: 800,
-          height: 270,
-          margin: {
-            top: 40,
-            right: 15,
-            bottom: 50,
-            left: 15
-          },
-          chartResize: true,
-          chartType: "timeseries"
-        },
-        data: jdata,
-        xAxis: {
-          bottom: {
-            label: 'Time',
-            tickNumber: 4
-          }
-        },
-        yAxis: {
-          left: {
-            unit: 'Count',
-            tickNumber: 5,
-            label: 'Count',
-            format (d) { // Format all series belong to this Y Axis
-              return d
-            }
-          }
-        },
-        zoom: {
-          visible: true,
-          onXZoom (st, et) {
-            console.log('im x zoom', st, et)
-          }
-        },
-        series: {
-          stack: [{
-            name: 'StackGroup', // Name of stack
-            plotAxis: ["left", "bottom"], // Define its axis dependency for all below defined series
-            stackOrderMembers: [{
-              name: 'Series-C',
-              color:"#1cb09f",
-            }, {
-              name: 'Series-B',
-              color:"#078609",
-            }, {
-              name: 'Series-A',
-              color:"#990506",
-            }]
-          }]
-        }
-      };
-
-      // myChart = vc.plotChart('#container2', opts)
-      vc.plotChart('#container2', opts).then(chart => myChart = chart)
-    }
-
     function status(response) {
       if (response.status >= 200 && response.status < 300) {
         return Promise.resolve(response)
@@ -252,7 +224,6 @@ var opts = {
       })
       .then((jdata) => {
         drawLineChart(jdata)
-        drawStackChart(jdata)
       })
 
   }
