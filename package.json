@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "babel": "babel src --out-dir dist/compiled --source-maps",
-    "start": "http-server ./examples/ -p 9088",
+    "start": "http-server ./docs/examples/ -p 9088",
     "build": "webpack",
     "dev": "webpack --config webpack.dev.js"
   },
