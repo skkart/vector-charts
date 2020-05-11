@@ -1,5 +1,7 @@
 # vector-charts
-***A light-weigth reusable charting library based on D3.js v5.***
+***A light-weight, scalable and platform independent charting library based on D3.js v5***
+
+**This library is easily extendible for further chart types**
 
 **Timeseries Charts**
 * Line Chart - [Demo](./examples/line.html)
