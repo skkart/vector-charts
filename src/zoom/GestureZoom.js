@@ -125,8 +125,8 @@ export default class GestureZoom extends ChartComponent {
 
             // Used onZoom.call(), so that external function can have access of chart Instance
             isFunction(self.opts.onZoom) && self.opts.onZoom.call(self.opts.chart, startDt, endDt)
-            self.updatebrushXSelection(0, 0)
           }
+          self.updatebrushXSelection(0, 0)
           startPos = 0
           endPos = 0
           isGesture = false
@@ -150,7 +150,7 @@ export default class GestureZoom extends ChartComponent {
 
         const d0 = d3Event.selection.map(yScaleLeft.invert)
 
-          
+
         const d1 = d0 && d0.map(Math.round)
           .sort(function (a, b) {
             return (a - b)
@@ -183,7 +183,7 @@ export default class GestureZoom extends ChartComponent {
 
         const d0 = d3Event.selection.map(yScaleRight.invert)
 
-          
+
         const d1 = d0 && d0.map(Math.round)
           .sort(function (a, b) {
             return (a - b)
