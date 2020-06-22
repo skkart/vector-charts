@@ -35,4 +35,7 @@ export default {
   PIE_ARC_STROKE: 1,
   PIE_DULL_OPACITY: 0.7,
   PIE_POS_LEGEND: 65,
+  DATA_PARSE_DEFAULT_TYPE: 'bottom to top',
+  SUN_BURST_DATA_PARSE_TOP_TO_BOTTOM: 'top to bottom',
+  SUN_BURST_TRANSITION_TIME: 750
 }

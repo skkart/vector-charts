@@ -201,7 +201,7 @@ export function addDefaultBSOptions (opts) {
   // General Options to both chartType
   opts.tooltip = Object.assign({
     visible: true,
-    format: false // Use aryakaCharts internal tooltip formatter to show raw data
+    format: false // Use charts internal tooltip formatter to show raw data
   }, (opts.tooltip || {}))
 
   if (!isFunction(opts.tooltip.format)) {
@@ -216,6 +216,7 @@ export function addDefaultBSOptions (opts) {
       const plotSet = this.options.plotSet
       const timeInfo = this.options.timeInfo
       const yAxis = this.options.yAxis
+      const tableStringArray = [] // used to show the tooltip in reverse order
 
       let tableStr = `<table><tbody><tr>
             <td class="value_full" colspan="2">
@@ -232,16 +233,23 @@ export function addDefaultBSOptions (opts) {
         const yOrient = yAxis[plotSet[key].plotAxis[0]]
         const format = yOrient.format || defaultValueFormat
 
-        tableStr += `<tr>
+
+        tableStringArray.push(`<tr>
         <td class='name'>
             <span style='background-color:${plotSet[key].color}'></span>
         </td>
         <td class='value'>
             ${format(val, plotSet[key].unit)}
         </td>
-        </tr>`
+        </tr>`)
       }
+      // reverse the table string data (for stacked)
+      tableStringArray.reverse()
 
+      // construct the table string
+      tableStringArray.forEach((tString) => {
+        tableStr += tString
+      })
       tableStr += '</tbody></table>'
 
       return tableStr
@@ -262,7 +270,7 @@ export function addDefaultPSOptions (opts) {
   }, (opts.tooltip || {}))
 
   if (!isFunction(opts.tooltip.format)) {
-    opts.tooltip.format = function (d) {
+    let formatter = function (d) {
       if (!d || !d.value) {
         return ''
       }
@@ -281,7 +289,28 @@ export function addDefaultPSOptions (opts) {
               </tr>
               </tbody>
               </table>`
+
+
     }
+    if (opts.series && opts.series.sunburst) {
+      formatter = function (d) {
+        if (!d || !d.value) {
+          return ''
+        }
+
+        const sunburstObj = this.options.series.sunburst
+        const format = sunburstObj.format || defaultValueFormat
+        return `<table style='opacity: 0.8;'>
+              <tbody>
+              <tr>
+              <td class='name'><span style='background-color:${d.color}'></span>${d.name}</td>
+              <td class='value' colspan='2'>${format(d.value, sunburstObj.unit)}</td>
+              </tr>
+              </tbody>
+              </table>`
+      }
+    }
+    opts.tooltip.format = formatter
   }
 
   addDefaultChartOptions(opts)

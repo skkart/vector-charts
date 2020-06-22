@@ -1,9 +1,9 @@
-// import * as zoom from 'd3-zoom'
-
 export {
   scaleBand,
   scaleLinear,
-  scaleTime
+  scaleTime,
+  scaleSqrt,
+  scaleOrdinal,
 } from 'd3-scale'
 
 export {
@@ -15,7 +15,13 @@ export {
 
 export {timeFormat} from 'd3-time-format'
 
+export {schemeCategory10} from 'd3-scale-chromatic'
+
 export {interpolate} from 'd3-interpolate'
+
+export {partition, hierarchy} from 'd3-hierarchy'
+
+export {path} from 'd3-path'
 
 export {
   select,
