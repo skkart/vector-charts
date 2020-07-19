@@ -18,6 +18,7 @@
     <!-- End Jekyll SEO tag -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
     <meta name="theme-color" content="#157878">
     <link rel="stylesheet" href="https://skkart.github.io/vector-charts/assets/css/style.css?v=12dfefa7734d5461d38ec3421524c1aeeb39f0d8" />
     <style>
@@ -64,7 +65,6 @@
 
 <section class="main-content">
     <h2 id="quick-start">TimeSeries > Line Chart</h2>
-    <img src="vc-main.png" />
     <div id="container" class="chart">
         <svg>
         </svg>
@@ -207,7 +207,8 @@ vc.plotChart('#container', opts).then(chart => myChart = chart)
         }
       };
 
-      vc.plotChart('#container', opts).then(chart => myChart = chart)
+      // vc.plotChart('#container', opts).then(chart => myChart = chart)
+      myChart = vc.plotChart('#container', opts)
     }
 
     function status(response) {
@@ -229,5 +230,5 @@ vc.plotChart('#container', opts).then(chart => myChart = chart)
 
   }
 </script>
-<script src="vector-charts-lazy.js"></script>
+<script src="vector-charts.js"></script>
 </html>
