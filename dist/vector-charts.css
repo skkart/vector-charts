@@ -299,7 +299,7 @@
     /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(#E5E5E5, #F4F4F4, #E5E5E5);
     /* For Firefox 3.6 to 15 */
-    background: url(../images/selectbox.png?build=@buildNumber@), linear-gradient(#E5E5E5, #F4F4F4, #E5E5E5);
+    background: linear-gradient(#E5E5E5, #F4F4F4, #E5E5E5);
     /* Standard syntax */
     background-position: 97% center;
     background-repeat: no-repeat;
