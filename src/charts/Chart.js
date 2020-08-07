@@ -74,7 +74,7 @@ export default class Chart extends ChartComponent {
       // Clear svg if it has needless content
       this.svg.html('')
 
-      let svgClass = 'vc-svg ' + opts.chart.className
+      let svgClass = 'vc-svg ' + (opts.chart.className || '')
       if (this.options.chart.isTouchScreen) {
         svgClass += ' vc-noselect'
       }
@@ -154,7 +154,7 @@ export default class Chart extends ChartComponent {
         this.chartWidth = this.chartFullSpace.width - (this.margin.left + this.margin.right)
         this.chartHeight = this.chartFullSpace.height - (this.margin.top + this.margin.bottom)
         setTimeout(() => this.update(), 0)
-      }, 450) // 'this' Will have reference of timeSeriesChart or pieSeriesChart
+      }, 100) // 'this' Will have reference of timeSeriesChart or pieSeriesChart
 
       // Add resize for each chart based on chart ID namespace
       const chartId = 'vc-' + (this.options.chart.id || this.options.chart.counter)

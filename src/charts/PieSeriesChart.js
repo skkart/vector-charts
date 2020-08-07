@@ -7,6 +7,7 @@ import ChartDataParser from '@/data-parser/ChartDataParser'
 import PieSeries from '@/series/PieSeries'
 import PieSeriesLegend from '@/legend/PieSeriesLegend'
 import TimeSeriesLegend from '@/legend/TimeSeriesLegend'
+import BasicSBParser from '@/data-parser/BasicSBParser'
 
 export default class PieSeriesChart extends Chart {
   constructor (container, opts) {
@@ -14,7 +15,12 @@ export default class PieSeriesChart extends Chart {
 
     // Create the dataParser is not passed
     if (!opts.dataParser) {
-      opts.dataParser = new BasicPSParser(opts)
+      if (opts.series.sunburst) {
+        opts.dataParser = new BasicSBParser(opts)
+      } else {
+        opts.dataParser = new BasicPSParser(opts)
+      }
+
     }
     // Check the dataParser exists and its instanceof ChartDataParser
     if (!(opts.dataParser instanceof ChartDataParser)) {
