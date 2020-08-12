@@ -14,7 +14,8 @@ export default class Line extends ChartComponent {
       lineData: null,
       yAxisTarget: null,
       xAxisTarget: null,
-      visible: true
+      visible: true,
+      dots: null
     }, opts)
 
     const self = this
@@ -71,6 +72,25 @@ export default class Line extends ChartComponent {
       .attr('d', function (d) {
         return self.line(d.values) // Values are array of array having format like  [[date, series1, series2 ....],...]
       })
+
+    // Adding dots on each points on line if enabled
+    if (this.opts.dots && this.opts.dots.visible) {
+      const totalLineLength = this.opts.lineData.values.length
+      this.dotsTag = this.lineTag.selectAll('vc-line-dot')
+        .data(this.opts.lineData.values)
+        .enter().append('circle')
+        .attr('class', function (d, index) {
+          let className = `vc-dot vc-dot-count-${index}`
+          if (index === 0) {
+            className += ' vc-dot-first'
+          }
+          if (index === (totalLineLength - 1)) {
+            className += ' vc-dot-last'
+          }
+          return className
+        })
+        .attr('r', this.opts.dots.radius)
+    }
   }
 
   // Update happens when the chart is resized
@@ -79,6 +99,27 @@ export default class Line extends ChartComponent {
     this.lineTag && this.lineTag.select('path').attr('d', function (d) {
       return self.line(d.values)
     })
+    // Refresh dots
+    if (this.dotsTag) {
+      // Find x and y axis based on plotAxis
+      let x = getObject(this.opts, 'chart.xAxis.scale')
+      if (this.opts.plotAxis.indexOf(constants.DIR_TOP) > -1) {
+        x = getObject(this.opts, 'chart.xAxis2.scale')
+      }
+
+      let y = getObject(this.opts, 'chart.yAxis.scale')
+      if (this.opts.plotAxis.indexOf(constants.DIR_RIGHT) > -1) {
+        y = getObject(this.opts, 'chart.yAxis2.scale')
+      }
+      this.dotsTag.attr('r', this.opts.dots.radius)
+        .attr('cx', function (d) {
+          // xAxisTarget refers the index of date in data Arr
+          return x(d[self.opts.xAxisTarget])
+        })
+        .attr('cy', function (d) {
+          return y(d[self.opts.yAxisTarget])
+        })
+    }
   }
 
   showHide (showFlag) {
@@ -99,7 +140,7 @@ export default class Line extends ChartComponent {
     }
 
   }
-  
+
   remove () {
     this.lineTag && this.lineTag.remove()
     this.line = null

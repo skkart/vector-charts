@@ -37,7 +37,8 @@ export default class TimeSeries extends Series {
           color: eachPlotSet[plotData.name].color,
           lineWidth: eachPlotSet[plotData.name].lineWidth,
           values: data
-        }
+        },
+        dots: plotData.dots
       }))
     })
   }

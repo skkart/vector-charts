@@ -378,3 +378,9 @@
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Opera and Firefox */
 }
+
+
+.vc-dot {
+    fill: #ffab00;
+    stroke: #fff;
+}
